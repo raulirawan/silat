@@ -119,11 +119,11 @@ class SuratUndanganController extends Controller
 
         if ($jenisSurat == 'lama') {
             $doc = new TemplateProcessor('surat/surat-undangan.docx');
-            $doc->setValue('NOMOR', $surat->nomor_surat);
+            // $doc->setValue('NOMOR', $surat->nomor_surat);
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran);
             $doc->setValue('HAL', $surat->hal);
-            $doc->setValue('TANGGAL', $surat->tanggal);
+            // $doc->setValue('TANGGAL', $surat->tanggal);
             $doc->setValue('NAMAJABATAN', $surat->nama_jabatan);
             $doc->setValue('NAMAKEPALA', $surat->nama_kepala);
             $doc->setValue('NAMABIRO', $surat->biro->nama);

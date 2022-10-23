@@ -118,11 +118,11 @@ class SuratNotaDinasController extends Controller
             $doc = new TemplateProcessor('surat/nota-dinas.docx');
             $doc->setValue('YTH', $surat->ythh->nama);
             $doc->setValue('DARI', $surat->dari);
-            $doc->setValue('NOMOR', $surat->nomor_surat);
+            // $doc->setValue('NOMOR', $surat->nomor_surat);
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran);
             $doc->setValue('HAL', $surat->hal);
-            $doc->setValue('TANGGAL', $surat->tanggal);
+            // $doc->setValue('TANGGAL', $surat->tanggal);
             $doc->setValue('NAMAJABATAN', $surat->nama_jabatan);
             $doc->setValue('NAMABIRO', $surat->biro->nama);
             $doc->setValue('NAMABIROSMALL', ucwords(strtolower($surat->biro->nama)));
