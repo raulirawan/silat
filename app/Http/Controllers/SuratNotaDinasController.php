@@ -115,7 +115,7 @@ class SuratNotaDinasController extends Controller
     {
         $surat = Surat::find($id);
         if ($jenisSurat == 'lama') {
-            $doc = new TemplateProcessor('surat/nota-dinas.docx');
+            $doc = new TemplateProcessor('surat/nota-dinas-v1.docx');
             $doc->setValue('YTH', $surat->ythh->nama);
             $doc->setValue('DARI', $surat->dari);
             // $doc->setValue('NOMOR', $surat->nomor_surat);

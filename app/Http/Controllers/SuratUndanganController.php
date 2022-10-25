@@ -31,6 +31,7 @@ class SuratUndanganController extends Controller
     public function store(Request $request)
     {
         $surat = new Surat();
+        $surat->pilih_yth = $request->pilih_yth;
         $surat->biro_id = $request->biro_id;
         $surat->user_id = User::where('email', Session::get('email'))->first()->id;
         $surat->yth = $request->yth;
@@ -71,6 +72,7 @@ class SuratUndanganController extends Controller
     public function update(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
+        $surat->pilih_yth = $request->pilih_yth;
         $surat->biro_id = $request->biro_id;
         $surat->user_id = User::where('email', Session::get('email'))->first()->id;
         $surat->yth = $request->yth;
@@ -118,7 +120,11 @@ class SuratUndanganController extends Controller
         $surat = Surat::find($id);
 
         if ($jenisSurat == 'lama') {
-            $doc = new TemplateProcessor('surat/surat-undangan.docx');
+            if ($surat->pilih_yth == 'terlampir') {
+                $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
+            } else {
+                $doc = new TemplateProcessor('surat/surat-undangan-one-yth.docx');
+            }
             // $doc->setValue('NOMOR', $surat->nomor_surat);
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran);

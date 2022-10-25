@@ -48,17 +48,16 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="{{ route('undangan.store') }}" method="post" novalidate="novalidate">
-                                @csrf
-                                {{-- <div class="form-group">
-                                    <label class="control-label mb-1">Yth</label>
-                                    <select name="yth_id" id="yth_id" class="form-control" required>
-                                        <option value="">Pilih Yth</option>
-                                        @foreach (App\Yth::all() as $yth)
-                                            <option value="{{ $yth->id }}">{{ $yth->nama }}</option>
-                                        @endforeach
+                            <form action="{{ route('undangan.store') }}" method="post">
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Jenis Yth</label>
+                                    <select name="pilih_yth" id="pilih_yth" class="form-control" required>
+                                        <option value="">Jenis Yth</option>
+                                        <option value="terlampir">Terlampir</option>
+                                        <option value="tidak terlampir">Tidak Terlampir</option>
                                     </select>
-                                </div> --}}
+                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label mb-1">Yth</label>
                                     <textarea name="yth" id="yth" class="form-control" required></textarea>
@@ -79,8 +78,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Nomor Surat</label>
-                                    <input type="text" name="nomor_surat" spellcheck="true" class="form-control"
-                                        >
+                                    <input type="text" name="nomor_surat" spellcheck="true" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Sifat Surat</label>
@@ -92,11 +90,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Nama Kepala Bagian</label>
-                                    <input type="text" name="nama_kepala" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="nama_kepala" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Nama Jabatan</label>
-                                    <input type="text" name="nama_jabatan" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="nama_jabatan" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Judul Lampiran</label>
@@ -112,19 +112,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Tanggal</label>
-                                    <input type="text" name="tanggal_acara" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="tanggal_acara" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Pukul</label>
-                                    <input type="text" name="pukul" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="pukul" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Tempat</label>
-                                    <input type="text" name="tempat" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="tempat" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Acara</label>
-                                    <input type="text" name="acara" spellcheck="true" class="form-control" required>
+                                    <input type="text" name="acara" spellcheck="true" class="form-control"
+                                        required>
                                 </div>
                                 {{-- <div class="form-group">
                                     <label class="control-label mb-1">Pembuka</label>
@@ -168,31 +172,56 @@
                 selector: 'textarea#yth',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#pembuka',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#isi',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#penutup',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#tembusan',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
         </script>
         {{-- <script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>

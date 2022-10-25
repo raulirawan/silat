@@ -48,20 +48,19 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="{{ route('undangan.update', $surat->id) }}" method="post"
-                                novalidate="novalidate">
+                            <form action="{{ route('undangan.update', $surat->id) }}" method="post">
                                 @csrf
-                                {{-- <div class="form-group">
-                                    <label class="control-label mb-1">Yth</label>
-                                    <select name="yth_id" id="yth_id" class="form-control" required>
-                                        <option value="">Pilih Yth</option>
-                                        @foreach (App\Yth::all() as $yth)
-                                            <option value="{{ $yth->id }}"
-                                                {{ $yth->id == $surat->yth_id ? 'selected' : '' }}>{{ $yth->nama }}
-                                            </option>
-                                        @endforeach
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Jenis Yth</label>
+                                    <select name="pilih_yth" id="pilih_yth" class="form-control" required>
+                                        <option value="">Jenis Yth</option>
+                                        <option value="terlampir" {{ $surat->pilih_yth == 'terlampir' ? 'selected' : '' }}>
+                                            Terlampir</option>
+                                        <option value="tidak terlampir"
+                                            {{ $surat->pilih_yth == 'tidak terlampir' ? 'selected' : '' }}>Tidak Terlampir
+                                        </option>
                                     </select>
-                                </div> --}}
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Yth</label>
                                     <textarea name="yth" id="yth" class="form-control" required>{{ $surat->yth }}</textarea>
@@ -86,7 +85,7 @@
                                 <div class="form-group">
                                     <label class="control-label mb-1">Nomor Surat</label>
                                     <input type="text" name="nomor_surat" value="{{ $surat->nomor_surat }}"
-                                        class="form-control" >
+                                        class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Sifat Surat</label>
@@ -173,31 +172,56 @@
                 selector: 'textarea#yth',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#pembuka',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#isi',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#penutup',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#tembusan',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
         </script>
     @endpush

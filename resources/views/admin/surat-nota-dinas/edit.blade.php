@@ -49,7 +49,7 @@
                         <div class="card-body">
 
                             <form action="{{ route('admin.surat-nota-dinas.update', $surat->id) }}" method="post"
-                                novalidate="novalidate">
+                                >
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-1">Yth</label>
@@ -161,25 +161,45 @@
                 selector: 'textarea#pembuka',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#isi',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#penutup',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#tembusan',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
         </script>
     @endpush

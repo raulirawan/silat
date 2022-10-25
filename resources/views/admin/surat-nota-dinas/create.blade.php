@@ -48,8 +48,7 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="{{ route('admin.surat-nota-dinas.store') }}" method="post"
-                                novalidate="novalidate">
+                            <form action="{{ route('admin.surat-nota-dinas.store') }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-1">Yth</label>
@@ -80,8 +79,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Nomor Surat</label>
-                                    <input type="text" name="nomor_surat" spellcheck="true" class="form-control"
-                                        >
+                                    <input type="text" name="nomor_surat" spellcheck="true" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Sifat Surat</label>
@@ -149,25 +147,45 @@
                 selector: 'textarea#pembuka',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#isi',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#penutup',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
             tinymce.init({
                 selector: 'textarea#tembusan',
                 plugins: 'lists',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-                lists_indent_on_tab: true
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
             });
         </script>
         {{-- <script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
