@@ -13,6 +13,10 @@
                     </li>
 
                     <li class="menu-title">Data</li><!-- /.menu-title -->
+
+                    <li class="{{ request()->is('admin/pegawai*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.pegawai.index') }}"><i class="menu-icon fa fa-user"></i>Pegawai </a>
+                    </li>
                     <li class="{{ request()->is('admin/biro*') ? 'active' : '' }}">
                         <a href="{{ route('admin.biro.index') }}"><i class="menu-icon fa fa-user"></i>Biro </a>
                     </li>

@@ -52,6 +52,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard.index');
 
     // CRUD BIRO
+    Route::get('pegawai', 'Admin\PegawaiController@index')->name('admin.pegawai.index');
+    Route::post('pegawai/create', 'Admin\PegawaiController@store')->name('admin.pegawai.store');
+    Route::post('pegawai/update/{id}', 'Admin\PegawaiController@update')->name('admin.pegawai.update');
+    Route::delete('pegawai/delete/{id}', 'Admin\PegawaiController@delete')->name('admin.pegawai.delete');
+
+
+    // CRUD BIRO
     Route::get('biro', 'Admin\BiroController@index')->name('admin.biro.index');
     Route::post('biro/create', 'Admin\BiroController@store')->name('admin.biro.store');
     Route::post('biro/update/{id}', 'Admin\BiroController@update')->name('admin.biro.update');
