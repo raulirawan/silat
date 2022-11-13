@@ -194,7 +194,7 @@
                 <form method="POST" action="{{ route('login.post') }}">
                     @csrf
                     <div class="login100-form-avatar">
-                        <img src="{{ asset('assets/auth') }}/images/avatar-01.jpg" alt="AVATAR" />
+                        <img src="{{ asset('silat-jakarta.png') }}" style="width: 100%; padding-top: 69px;" alt="AVATAR" />
                     </div>
                     <span class="login100-form-title p-t-20 p-b-45">
                         Silahkan Login!

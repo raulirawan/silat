@@ -26,7 +26,8 @@
     <link href="{{ asset('frontend') }}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="{{ asset('frontend') }}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="{{ asset('frontend') }}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Template Main CSS File -->
     <link href="{{ asset('frontend') }}/assets/css/style.css" rel="stylesheet">
 
@@ -45,7 +46,7 @@
         <div class="container d-flex align-items-center">
 
             <h1 class="logo me-auto"><a href="index.html">
-                    <img src="{{ asset('silat-jakarta.png') }}" style="max-width: 200px">
+                    <img src="{{ asset('silat-jakarta-1.png') }}" style="max-width: 200px">
                 </a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="{{ asset('frontend/assets/img') }}/logo.png" alt="" class="img-fluid"></a>-->
@@ -68,20 +69,108 @@
     <section id="hero" class="d-flex align-items-center">
 
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
-                    data-aos="fade-up" data-aos-delay="200">
-                    <h1>SILAT</h1>
-                    <h2>Sistem Informasi Tata Usaha</h2>
-                    <div class="d-flex justify-content-center justify-content-lg-start">
-                        <a href="#services" class="btn-get-started scrollto">Layanan</a>
 
+            {{-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                                data-aos="fade-up" data-aos-delay="200">
+                                <img src="{{ asset('silat-jakarta-1.png') }}" alt="">
+                                <div class="d-flex justify-content-center justify-content-lg-start">
+                                    <a href="#services" class="btn-get-started scrollto">Layanan</a>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                                <img src="{{ asset('frontend/assets/img') }}/hero-img.png" class="img-fluid animated"
+                                    alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                      dawa
+                    </div>
+                    <div class="carousel-item">
+                       dawaw
                     </div>
                 </div>
-                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="{{ asset('frontend/assets/img') }}/hero-img.png" class="img-fluid animated"
-                        alt="">
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div> --}}
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                {{-- <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+                </ol> --}}
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                                data-aos="fade-up" data-aos-delay="200">
+                                <img src="{{ asset('silat-jakarta-1.png') }}" alt="">
+                                <div class="d-flex justify-content-center justify-content-lg-start">
+                                    <a href="#services" class="btn-get-started scrollto">Layanan</a>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                                <img src="{{ asset('img-1.jpg') }}" class="img-fluid animated" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                                data-aos="fade-up" data-aos-delay="200">
+                                <img src="{{ asset('silat-jakarta-1.png') }}" alt="">
+                                <div class="d-flex justify-content-center justify-content-lg-start">
+                                    <a href="#services" class="btn-get-started scrollto">Layanan</a>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                                <img src="{{ asset('img-2.png') }}" class="img-fluid animated" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                                data-aos="fade-up" data-aos-delay="200">
+                                <img src="{{ asset('silat-jakarta-1.png') }}" alt="">
+                                <div class="d-flex justify-content-center justify-content-lg-start">
+                                    <a href="#services" class="btn-get-started scrollto">Layanan</a>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in"
+                                data-aos-delay="200">
+                                <img src="{{ asset('img-3.png') }}" class="img-fluid animated" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-target="#myCarousel" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-target="#myCarousel" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
             </div>
         </div>
 
@@ -138,10 +227,10 @@
 
                     <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
                         data-aos-delay="400">
-                        <div class="icon-box" style="border-radius: 25px">
+                        <div class="icon-box text-center" style="border-radius: 25px">
                             <div class="icon"><i class="bx bx-envelope"></i></div>
                             <h4><a href="{{ route('login') }}">E-Surat</a></h4>
-                            <p>Mau di isi apa bosque di sini , atau di hilangin aja nih </p>
+                            <p>Pembuatan Surat Undangan, Surat Biasa dan Nota Dinas</p>
                         </div>
                     </div>
 
@@ -166,7 +255,8 @@
                             <div class="address">
                                 <i class="bi bi-geo-alt"></i>
                                 <h4>Lokasi:</h4>
-                                <p>Jl. Medan Merdeka Sel., RT.11/RW.2, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110, Indonesia</p>
+                                <p>Jl. Medan Merdeka Sel., RT.11/RW.2, Gambir, Kecamatan Gambir, Kota Jakarta Pusat,
+                                    Daerah Khusus Ibukota Jakarta 10110, Indonesia</p>
                             </div>
 
                             <div class="email">
@@ -233,7 +323,20 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('frontend') }}/assets/js/main.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script>
+        $('.carousel').carousel({
+            interval: 2000
+        })
+    </script>
 </body>
 
 </html>
