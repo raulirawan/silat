@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use App\Surat;
+use Carbon\Carbon;
+use App\Helpers\Helper;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Html;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -28,34 +32,33 @@ class SuratUndanganController extends Controller
     public function store(Request $request)
     {
         $surat = new Surat();
-        $surat->yth = $request->yth;
-
-        $surat->biro_id = $request->biro_id;
-        $surat->pilih_yth = $request->pilih_yth;
-        $surat->tanggal = $request->tanggal;
-        $surat->nip = $request->nip;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
-        $surat->nomor_surat = $request->nomor_surat;
+        $surat->yth = json_encode($request->yth);
+        $surat->user_id = User::where('email', Session::get('email'))->first()->id;
         $surat->sifat = $request->sifat;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
+        $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
-        $surat->hal = $request->hal;
         $surat->hari = $request->hari;
         $surat->tanggal_acara = $request->tanggal_acara;
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
-        $surat->tembusan = $request->tembusan;
+        $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
         $surat->status = 'PENDING';
         $surat->save();
 
+        $roles = User::where('email', Session::get('email'))->first()->roles;
+        if ($roles == 'ADMIN') {
+            if ($surat != null) {
+                return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Tambah');
+            } else {
+                return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Tambah');
+            }
+        }
         if ($surat != null) {
-            return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Tambah');
+            return redirect()->route('undangan.index')->with('success', 'Data Berhasil di Tambah');
         } else {
-            return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Tambah');
+            return redirect()->route('undangan.index')->with('error', 'Data Gagal di Tambah');
         }
     }
 
@@ -69,34 +72,35 @@ class SuratUndanganController extends Controller
     public function update(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
-        $surat->yth = $request->yth;
 
-        $surat->biro_id = $request->biro_id;
-        $surat->pilih_yth = $request->pilih_yth;
-        $surat->tanggal = $request->tanggal;
-        $surat->nip = $request->nip;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
-        $surat->nomor_surat = $request->nomor_surat;
+        $surat->yth = json_encode($request->yth);
+
         $surat->sifat = $request->sifat;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
+        $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
-        $surat->hal = $request->hal;
         $surat->hari = $request->hari;
         $surat->tanggal_acara = $request->tanggal_acara;
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
-        $surat->tembusan = $request->tembusan;
+        $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
-        $surat->status = 'PENDING';
         $surat->save();
 
+        $roles = User::where('email', Session::get('email'))->first()->roles;
+        if ($roles == 'ADMIN') {
+            if ($surat != null) {
+
+                return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Update');
+            } else {
+                return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Update');
+            }
+        }
         if ($surat != null) {
-            return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Update');
+
+            return redirect()->route('undangan.index')->with('success', 'Data Berhasil di Update');
         } else {
-            return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Update');
+            return redirect()->route('undangan.index')->with('error', 'Data Gagal di Update');
         }
     }
 
@@ -104,11 +108,21 @@ class SuratUndanganController extends Controller
     {
         $data = Surat::findOrFail($id);
 
+
+        $roles = User::where('email', Session::get('email'))->first()->roles;
+        if ($roles == 'ADMIN') {
+            if ($data != null) {
+                $data->delete();
+                return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Hapus');
+            } else {
+                return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Hapus');
+            }
+        }
         if ($data != null) {
             $data->delete();
-            return redirect()->route('admin.surat-undangan.index')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('undangan.index')->with('success', 'Data Berhasil di Hapus');
         } else {
-            return redirect()->route('admin.surat-undangan.index')->with('error', 'Data Gagal di Hapus');
+            return redirect()->route('undangan.index')->with('error', 'Data Gagal di Hapus');
         }
     }
 
@@ -117,32 +131,25 @@ class SuratUndanganController extends Controller
         $surat = Surat::find($id);
 
         if ($jenisSurat == 'lama') {
-            if ($surat->pilih_yth == 'terlampir') {
-                $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
-            } else {
-                $doc = new TemplateProcessor('surat/surat-undangan-one-yth.docx');
-            }
-            // $doc->setValue('NOMOR', $surat->nomor_surat);
+            $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
+
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran);
-            $doc->setValue('HAL', $surat->hal);
-            // $doc->setValue('TANGGAL', $surat->tanggal);
-            $doc->setValue('NAMAJABATAN', $surat->nama_jabatan);
-            $doc->setValue('NAMAKEPALA', $surat->nama_kepala);
-            $doc->setValue('NAMABIRO', $surat->biro->nama);
-            $doc->setValue('NAMABIROSMALL', ucwords(strtolower($surat->biro->nama)));
-            $doc->setValue('NIP', $surat->nip);
             $doc->setValue('HARI', $surat->hari);
-            $doc->setValue('TANGGALACARA', $surat->tanggal_acara);
+            $doc->setValue('TANGGALACARA', Helper::dateFormat($surat->tanggal_acara));
             $doc->setValue('PUKUL', $surat->pukul);
             $doc->setValue('TEMPAT', $surat->tempat);
             $doc->setValue('ACARA', $surat->acara);
-            $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
+            // $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
 
+            // YTH BLOCK
+            $yth = $surat->yth;
+            $htmlYth = view('admin.yth-template', compact('yth'))->render();
+            // yth
             $section = (new PhpWord())->addSection();
             // add html
-            Html::addHtml($section, $surat->yth, false, false);
+            Html::addHtml($section, $htmlYth, false, false);
 
             // get elements in section
             $containers = $section->getElements();
@@ -157,6 +164,26 @@ class SuratUndanganController extends Controller
                 // and the $i+1 as the cloned elements start with #1
                 $doc->setComplexBlock('html#' . ($i + 1), $containers[$i]);
             }
+
+            // TEMBUSAN BLOCK
+            $tembusan = $surat->tembusan;
+            $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
+
+            $section = (new PhpWord())->addSection();
+            // add html
+            Html::addHtml($section, $htmlTembusan, false, false);
+
+            // get elements in section
+            $containers = $section->getElements();
+            $doc->cloneBlock('blocktembusan', count($containers), true, true);
+
+            for ($i = 0; $i < count($containers); $i++) {
+
+                // be aware of using setComplexBlock
+                // and the $i+1 as the cloned elements start with #1
+                $doc->setComplexBlock('tembusan#' . ($i + 1), $containers[$i]);
+            }
+
 
             $pathFile = 'surat/undangan-' . $surat->id . '.docx';
             if (file_exists($pathFile)) {
@@ -187,7 +214,11 @@ class SuratUndanganController extends Controller
 
             return Response::download($file, $name, $headers);
         } else {
-            return redirect()->route('admin.surat-undangan.index')->with('error', 'Surat Belum Tersedia');
+            $roles = User::where('email', Session::get('email'))->first()->roles;
+            if ($roles == 'ADMIN') {
+                return redirect()->route('admin.surat-undangan.index')->with('error', 'Surat Belum Tersedia');
+            }
+            return redirect()->route('undangan.index')->with('error', 'Surat Belum Tersedia');
         }
     }
 }

@@ -55,7 +55,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 15%">Tanggal Surat</th>
-                                            <th>Biro</th>
+                                            <th>Nama Pegawai</th>
                                             <th>Sifat</th>
                                             <th>Status</th>
                                             <th style="width: 30%">Aksi</th>
@@ -65,7 +65,7 @@
                                         @foreach ($surat as $item)
                                             <tr>
                                                 <td>{{ $item->tanggal }}</td>
-                                                <td>{{ $item->biro->nama }}</td>
+                                                <td>{{ $item->user->email ?? 'Tidak Ada' }}</td>
                                                 <td>{{ $item->sifat }}</td>
                                                 <td>
                                                     @if ($item->status == 'PENDING')
@@ -185,11 +185,12 @@
                 $('#form-upload').attr('action', '/admin/upload/' + id);
             });
 
+
             $(document).on('click', '#download', function() {
                 var id = $(this).data('id');
 
-                $('#file_lama').attr('href', '/undangan/download/lama/' + id);
-                $('#file_baru').attr('href', '/undangan/download/baru/' + id);
+                $('#file_lama').attr('href', '/admin/surat-undangan/download/lama/' + id);
+                $('#file_baru').attr('href', '/admin/surat-undangan/download/baru/' + id);
             });
             $(document).on('click', '#send-email', function() {
                 var id = $(this).data('id');

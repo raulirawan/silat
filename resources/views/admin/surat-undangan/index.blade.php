@@ -67,7 +67,7 @@
                                             <tr>
                                                 <td>{{ $item->tanggal }}</td>
                                                 <td>{{ $item->user->email ?? 'Tidak Ada' }}</td>
-                                                <td>{{ $item->biro->nama }}</td>
+                                                <td>Biro Pemerintahan</td>
                                                 <td>{{ $item->sifat }}</td>
                                                 <td>
                                                     @if ($item->status == 'PENDING')

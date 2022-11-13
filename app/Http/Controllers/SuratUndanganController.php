@@ -25,32 +25,24 @@ class SuratUndanganController extends Controller
 
     public function create()
     {
-        return view('pages.surat-undangan.create');
+        return view('admin.surat-undangan.create');
     }
 
     public function store(Request $request)
     {
         $surat = new Surat();
-        $surat->pilih_yth = $request->pilih_yth;
-        $surat->biro_id = $request->biro_id;
         $surat->user_id = User::where('email', Session::get('email'))->first()->id;
-        $surat->yth = $request->yth;
-        $surat->tanggal = $request->tanggal;
-        $surat->nip = $request->nip;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
-        $surat->nomor_surat = $request->nomor_surat;
+        $surat->yth = json_encode($request->yth);
+
         $surat->sifat = $request->sifat;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
+        $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
-        $surat->hal = $request->hal;
         $surat->hari = $request->hari;
         $surat->tanggal_acara = $request->tanggal_acara;
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
-        $surat->tembusan = $request->tembusan;
+        $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
         $surat->status = 'PENDING';
         $surat->save();
@@ -65,35 +57,25 @@ class SuratUndanganController extends Controller
     public function edit($id)
     {
         $surat = Surat::findOrFail($id);
-
-        return view('pages.surat-undangan.edit', compact('surat'));
+        return view('admin.surat-undangan.edit', compact('surat'));
     }
 
     public function update(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
-        $surat->pilih_yth = $request->pilih_yth;
-        $surat->biro_id = $request->biro_id;
         $surat->user_id = User::where('email', Session::get('email'))->first()->id;
-        $surat->yth = $request->yth;
-        $surat->tanggal = $request->tanggal;
-        $surat->nip = $request->nip;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
-        $surat->nomor_surat = $request->nomor_surat;
+        $surat->yth = json_encode($request->yth);
+
         $surat->sifat = $request->sifat;
-        $surat->nama_kepala = $request->nama_kepala;
-        $surat->nama_jabatan = $request->nama_jabatan;
+        $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
-        $surat->hal = $request->hal;
         $surat->hari = $request->hari;
         $surat->tanggal_acara = $request->tanggal_acara;
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
-        $surat->tembusan = $request->tembusan;
+        $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
-        $surat->status = 'PENDING';
         $surat->save();
 
         if ($surat != null) {

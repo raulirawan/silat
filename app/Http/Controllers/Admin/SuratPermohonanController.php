@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use App\Surat;
+use Carbon\Carbon;
+use App\Helpers\Helper;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
@@ -14,17 +16,17 @@ use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 
-class SuratNotaDinasController extends Controller
+class SuratPermohonanController extends Controller
 {
     public function index()
     {
-        $surat = Surat::where('jenis_surat', 'Nota Dinas')->get();
-        return view('admin.surat-nota-dinas.index', compact('surat'));
+        $surat = Surat::where('jenis_surat', 'Permohonan')->get();
+        return view('admin.surat-permohonan.index', compact('surat'));
     }
 
     public function create()
     {
-        return view('admin.surat-nota-dinas.create');
+        return view('admin.surat-permohonan.create');
     }
 
     public function store(Request $request)
@@ -34,27 +36,24 @@ class SuratNotaDinasController extends Controller
         $surat->yth_id = $request->yth_id;
         $surat->tanggal = $request->tanggal;
         $surat->sifat = $request->sifat;
-        $surat->lampiran = $request->lampiran;
         $surat->pembuka = $request->pembuka;
-        $surat->isi = $request->isi;
         $surat->penutup = $request->penutup;
         $surat->tembusan = json_encode($request->tembusan);
-        $surat->jenis_surat = 'Nota Dinas';
+        $surat->jenis_surat = 'Permohonan';
         $surat->save();
 
         $roles = User::where('email', Session::get('email'))->first()->roles;
-
         if ($roles == 'ADMIN') {
             if ($surat != null) {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('success', 'Data Berhasil di Tambah');
+                return redirect()->route('admin.surat-permohonan.index')->with('success', 'Data Berhasil di Tambah');
             } else {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('error', 'Data Gagal di Tambah');
+                return redirect()->route('admin.surat-permohonan.index')->with('error', 'Data Gagal di Tambah');
             }
         }
         if ($surat != null) {
-            return redirect()->route('nota.dinas.index')->with('success', 'Data Berhasil di Tambah');
+            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Tambah');
         } else {
-            return redirect()->route('nota.dinas.index')->with('error', 'Data Gagal di Tambah');
+            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Tambah');
         }
     }
 
@@ -62,38 +61,37 @@ class SuratNotaDinasController extends Controller
     {
         $surat = Surat::findOrFail($id);
 
-        return view('admin.surat-nota-dinas.edit', compact('surat'));
+        return view('admin.surat-permohonan.edit', compact('surat'));
     }
 
     public function update(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
+
         $surat->user_id = User::where('email', Session::get('email'))->first()->id;
         $surat->yth_id = $request->yth_id;
         $surat->tanggal = $request->tanggal;
         $surat->sifat = $request->sifat;
-        $surat->lampiran = $request->lampiran;
         $surat->pembuka = $request->pembuka;
-        $surat->isi = $request->isi;
         $surat->penutup = $request->penutup;
         $surat->tembusan = json_encode($request->tembusan);
-        $surat->jenis_surat = 'Nota Dinas';
+        $surat->jenis_surat = 'Permohonan';
         $surat->save();
 
         $roles = User::where('email', Session::get('email'))->first()->roles;
-
         if ($roles == 'ADMIN') {
             if ($surat != null) {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('success', 'Data Berhasil di Update');
+
+                return redirect()->route('admin.surat-permohonan.index')->with('success', 'Data Berhasil di Update');
             } else {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('error', 'Data Gagal di Update');
+                return redirect()->route('admin.surat-permohonan.index')->with('error', 'Data Gagal di Update');
             }
         }
-
         if ($surat != null) {
-            return redirect()->route('nota.dinas.index')->with('success', 'Data Berhasil di Update');
+
+            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Update');
         } else {
-            return redirect()->route('nota.dinas.index')->with('error', 'Data Gagal di Update');
+            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Update');
         }
     }
 
@@ -102,20 +100,19 @@ class SuratNotaDinasController extends Controller
         $data = Surat::findOrFail($id);
 
         $roles = User::where('email', Session::get('email'))->first()->roles;
-
         if ($roles == 'ADMIN') {
             if ($data != null) {
                 $data->delete();
-                return redirect()->route('admin.surat-nota-dinas.index')->with('success', 'Data Berhasil di Hapus');
+                return redirect()->route('admin.surat-permohonan.index')->with('success', 'Data Berhasil di Hapus');
             } else {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('error', 'Data Gagal di Hapus');
+                return redirect()->route('admin.surat-permohonan.index')->with('error', 'Data Gagal di Hapus');
             }
         }
         if ($data != null) {
             $data->delete();
-            return redirect()->route('nota.dinas.index')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Hapus');
         } else {
-            return redirect()->route('nota.dinas.index')->with('error', 'Data Gagal di Hapus');
+            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Hapus');
         }
     }
 
@@ -124,32 +121,15 @@ class SuratNotaDinasController extends Controller
         $surat = Surat::find($id);
 
         if ($jenisSurat == 'lama') {
-            $doc = new TemplateProcessor('surat/nota-dinas-v1.docx');
+            $doc = new TemplateProcessor('surat/surat-permohonan-v1.docx');
+
             $doc->setValue('YTH', $surat->ythh->nama);
             $doc->setValue('SIFAT', $surat->sifat);
-            $doc->setValue('LAMPIRAN', $surat->lampiran);
             $doc->setValue('PEMBUKA', strip_tags($surat->pembuka));
             $doc->setValue('PENUTUP', strip_tags($surat->penutup));
             $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
+            // $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
-
-            $section = (new PhpWord())->addSection();
-            // add html
-            Html::addHtml($section, $surat->isi, false, false);
-
-            // get elements in section
-            $containers = $section->getElements();
-
-            // clone the html block in the template
-            $doc->cloneBlock('htmlblock', count($containers), true, true);
-
-            // replace the variables with the elements
-            for ($i = 0; $i < count($containers); $i++) {
-
-                // be aware of using setComplexBlock
-                // and the $i+1 as the cloned elements start with #1
-                $doc->setComplexBlock('html#' . ($i + 1), $containers[$i]);
-            }
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
@@ -170,7 +150,7 @@ class SuratNotaDinasController extends Controller
                 $doc->setComplexBlock('tembusan#' . ($i + 1), $containers[$i]);
             }
 
-            $pathFile = 'surat/nota-dinas-' . $surat->id . '.docx';
+            $pathFile = 'surat/permohonan-' . $surat->id . '.docx';
             if (file_exists($pathFile)) {
                 unlink($pathFile);
             }
@@ -179,7 +159,7 @@ class SuratNotaDinasController extends Controller
             // save final document
             $doc->saveAs($pathFile, true);
 
-            $name = 'nota-dinas-' . $surat->id . '.docx';
+            $name = 'permohonan-' . $surat->id . '.docx';
 
             $file = $pathFile;
 
@@ -201,11 +181,10 @@ class SuratNotaDinasController extends Controller
             return Response::download($file, $name, $headers);
         } else {
             $roles = User::where('email', Session::get('email'))->first()->roles;
-
             if ($roles == 'ADMIN') {
-                return redirect()->route('admin.surat-nota-dinas.index')->with('error', 'Surat Belum Tersedia');
+                return redirect()->route('admin.surat-permohonan.index')->with('error', 'Surat Belum Tersedia');
             }
-            return redirect()->route('nota.dinas.index')->with('error', 'Surat Belum Tersedia');
+            return redirect()->route('permohonan.index')->with('error', 'Surat Belum Tersedia');
         }
     }
 }

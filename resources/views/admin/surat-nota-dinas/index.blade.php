@@ -67,7 +67,7 @@
                                             <tr>
                                                 <td>{{ $item->tanggal }}</td>
                                                 <td>{{ $item->user->email ?? 'Tidak Ada' }}</td>
-                                                <td>{{ $item->biro->nama }}</td>
+                                                <td>Biro Pemerintahan</td>
                                                 <td>{{ $item->sifat }}</td>
                                                 <td>
                                                     @if ($item->status == 'PENDING')
@@ -85,10 +85,10 @@
                                                     <button id="download" data-id="{{ $item->id }}" data-toggle="modal"
                                                         data-target="#modal-download"
                                                         class="btn btn-info btn-sm float-left mr-1">Download</button>
-                                                    <a href="{{ route('admin.surat-nota-dinas.edit', $item->id) }}"
+                                                    <a href="{{ route('admin.surat-undangan.edit', $item->id) }}"
                                                         id="edit"
                                                         class="btn btn-primary btn-sm float-left mr-1">Edit</a>
-                                                    <form action="{{ route('admin.surat-nota-dinas.delete', $item->id) }}"
+                                                    <form action="{{ route('admin.surat-undangan.delete', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')
@@ -159,31 +159,32 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        @push('down-script')
-            <script>
-                $(document).on('click', '#upload', function() {
-                    var id = $(this).data('id');
+    @push('down-script')
+        <script>
+            $(document).on('click', '#upload', function() {
+                var id = $(this).data('id');
 
-                    $('#form-upload').attr('action', '/admin/upload/' + id);
-                });
+                $('#form-upload').attr('action', '/admin/upload/' + id);
+            });
 
-                $(document).on('click', '#download', function() {
-                    var id = $(this).data('id');
+            $(document).on('click', '#download', function() {
+                var id = $(this).data('id');
 
-                    $('#file_lama').attr('href', '/admin/surat-nota-dinas/download/lama/' + id);
-                    $('#file_baru').attr('href', '/admin/surat-nota-dinas/download/baru/' + id);
-                });
-            </script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/datatables.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/jszip.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/vfs_fonts.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.html5.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.print.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.colVis.min.js"></script>
-            <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
-        @endpush
-    @endsection
+                $('#file_lama').attr('href', '/admin/surat-nota-dinas/download/lama/' + id);
+                $('#file_baru').attr('href', '/admin/surat-nota-dinas/download/baru/' + id);
+            });
+        </script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/datatables.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/jszip.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/vfs_fonts.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.html5.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.print.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.colVis.min.js"></script>
+        <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
+    @endpush
+@endsection

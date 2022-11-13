@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Halaman Surat Nota Dinas')
+@section('title', 'Halaman Surat Permohonan')
 
 @section('content')
     <div class="breadcrumbs">
@@ -9,7 +9,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Surat Nota Dinas</h1>
+                            <h1>Surat Permohonan</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="#">Dashboard</a></li>
-                                <li><a href="#">Surat Nota Dinas</a></li>
+                                <li><a href="#">Surat Permohonan</a></li>
                             </ol>
                         </div>
                     </div>
@@ -43,9 +43,9 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Tabel Surat Nota Dinas</strong>
-                            {{-- <a href="{{ route('admin.surat-nota-dinas.create') }}"
-                                class="btn btn-info btn-sm mb-3 float-right">Tambah Surat Nota Dinas</a> --}}
+                            <strong class="card-title">Tabel Surat Permohonan</strong>
+                            <a href="{{ route('admin.surat-permohonan.create') }}"
+                                class="btn btn-info btn-sm mb-3 float-right">Tambah Surat Permohonan</a>
                         </div>
                         <div class="card-body">
 
@@ -54,8 +54,9 @@
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10%">Tanggal Surat</th>
+                                            <th style="width: 15%">Tanggal Surat</th>
                                             <th>Nama Pegawai</th>
+                                            <th>Biro</th>
                                             <th>Sifat</th>
                                             <th>Status</th>
                                             <th style="width: 30%">Aksi</th>
@@ -65,7 +66,8 @@
                                         @foreach ($surat as $item)
                                             <tr>
                                                 <td>{{ $item->tanggal }}</td>
-                                                <td>{{ $item->user->email }}</td>
+                                                <td>{{ $item->user->email ?? 'Tidak Ada' }}</td>
+                                                <td>Biro Pemerintahan</td>
                                                 <td>{{ $item->sifat }}</td>
                                                 <td>
                                                     @if ($item->status == 'PENDING')
@@ -75,17 +77,18 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <button id="send-email" data-id="{{ $item->id }}"
-                                                        data-toggle="modal" data-target="#modal-send-email"
-                                                        class="btn btn-info btn-sm float-left mr-1">Kirim Email</button>
-                                                    <a href="{{ route('tracking.surat.index', $item->id) }}"
+                                                    <a href="{{ route('admin.tracking.surat.index', $item->id) }}"
                                                         class="btn btn-secondary btn-sm float-left mr-1">Track</a>
+                                                    <button id="upload" data-id="{{ $item->id }}" data-toggle="modal"
+                                                        data-target="#modal-upload"
+                                                        class="btn btn-success btn-sm float-left mr-1">Upload</button>
                                                     <button id="download" data-id="{{ $item->id }}" data-toggle="modal"
                                                         data-target="#modal-download"
                                                         class="btn btn-info btn-sm float-left mr-1">Download</button>
-                                                    <a href="{{ route('nota.dinas.edit', $item->id) }}" id="edit"
+                                                    <a href="{{ route('admin.surat-permohonan.edit', $item->id) }}"
+                                                        id="edit"
                                                         class="btn btn-primary btn-sm float-left mr-1">Edit</a>
-                                                    <form action="{{ route('nota.dinas.delete', $item->id) }}"
+                                                    <form action="{{ route('admin.surat-permohonan.delete', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')
@@ -158,56 +161,30 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-send-email" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Kirim Surat</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <a href="#" id="kirim_file_lama" class="btn btn-danger">Kirim File Lama</a>
-                        <a href="#" id="kirim_file_baru" class="btn btn-success">Kirim File Baru</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        @push('down-script')
+            <script>
+                $(document).on('click', '#upload', function() {
+                    var id = $(this).data('id');
 
-    @push('down-script')
-        <script>
-            $(document).on('click', '#upload', function() {
-                var id = $(this).data('id');
+                    $('#form-upload').attr('action', '/admin/upload/' + id);
+                });
 
-                $('#form-upload').attr('action', '/admin/upload/' + id);
-            });
+                $(document).on('click', '#download', function() {
+                    var id = $(this).data('id');
 
-            $(document).on('click', '#download', function() {
-                var id = $(this).data('id');
-
-                $('#file_lama').attr('href', '/admin/surat-nota-dinas/download/lama/' + id);
-                $('#file_baru').attr('href', '/admin/surat-nota-dinas/download/baru/' + id);
-            });
-            $(document).on('click', '#send-email', function() {
-                var id = $(this).data('id');
-
-                $('#kirim_file_lama').attr('href', '/kirim/email/lama/' + id);
-                $('#kirim_file_baru').attr('href', '/kirim/email/baru/' + id);
-            });
-        </script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/datatables.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/jszip.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/vfs_fonts.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.html5.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.print.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.colVis.min.js"></script>
-        <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
-    @endpush
-@endsection
+                    $('#file_lama').attr('href', '/admin/surat-permohonan/download/lama/' + id);
+                    $('#file_baru').attr('href', '/admin/surat-permohonan/download/baru/' + id);
+                });
+            </script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/datatables.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/jszip.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/vfs_fonts.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.html5.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.print.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/lib/data-table/buttons.colVis.min.js"></script>
+            <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
+        @endpush
+    @endsection

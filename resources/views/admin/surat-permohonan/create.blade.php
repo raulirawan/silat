@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Halaman Surat Undangan')
+@section('title', 'Halaman Surat Permohonan')
 
 @section('content')
     <div class="breadcrumbs">
@@ -9,7 +9,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Surat Undangan</h1>
+                            <h1>Surat Permohonan</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="#">Dashboard</a></li>
-                                <li><a href="#">Surat Undangan</a></li>
+                                <li><a href="#">Surat Permohonan</a></li>
                             </ol>
                         </div>
                     </div>
@@ -43,12 +43,12 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Form Tambah Surat Undangan</strong>
+                            <strong class="card-title">Form Tambah Surat Permohonan</strong>
 
                         </div>
                         <div class="card-body">
 
-                            <form action="{{ route('admin.surat-undangan.store') }}" method="post">
+                            <form action="{{ route('admin.surat-permohonan.store') }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     {{-- <label class="control-label mb-1">Jenis Yth</label>
@@ -64,9 +64,9 @@
                                     <textarea name="yth" id="yth" class="form-control" required></textarea>
                                 </div> --}}
                                     <div class="form-group">
-                                        <label for="">Yth</label>
-                                        <select data-placeholder="Pilih Yth" multiple class="standardSelect form-control"
-                                            name="yth[]">
+                                        <label class="control-label mb-1">Yth</label>
+                                        <select name="yth_id" id="yth_id" class="form-control" required>
+                                            <option value="">Pilih Yth</option>
                                             @foreach (App\Yth::all() as $yth)
                                                 <option value="{{ $yth->id }}">{{ $yth->nama }}</option>
                                             @endforeach
@@ -113,58 +113,25 @@
                                         <label class="control-label mb-1">Nama Jabatan</label>
                                         <input type="text" name="nama_jabatan" class="form-control" required>
                                     </div> --}}
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label class="control-label mb-1">Lampiran</label>
                                         <select name="lampiran" id="lampiran" class="form-control" required>
                                             <option value="">Pilih Lampiran</option>
                                             <option value="1 satu (berkas)">1 satu (berkas)</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     {{-- <div class="form-group">
                                         <label class="control-label mb-1">Hal</label>
                                         <input type="text" name="hal" class="form-control" required>
                                     </div> --}}
                                     <div class="form-group">
-                                        <label class="control-label mb-1">Hari</label>
-                                        <select name="hari" id="hari" class="form-control" required>
-                                            <option value="">Pilih Hari</option>
-                                            <option value="Senin">Senin</option>
-                                            <option value="Selasa">Selasa</option>
-                                            <option value="Rabu">Rabu</option>
-                                            <option value="Kamis">Kamis</option>
-                                            <option value="Jum'at">Jum'at</option>
-                                            <option value="Sabtu">Sabtu</option>
-                                            <option value="Minggu">Minggu</option>
-                                        </select>
+                                        <label class="control-label mb-1">Paragraf 1</label>
+                                        <textarea name="pembuka" id="pembuka" class="form-control" required></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label mb-1">Tanggal Acara</label>
-                                        <input type="date" name="tanggal_acara" class="form-control" required>
+                                        <label class="control-label mb-1">Paragraf 2</label>
+                                        <textarea name="penutup" id="penutup" class="form-control" required></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Pukul</label>
-                                        <input type="text" name="pukul" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Tempat</label>
-                                        <input type="text" name="tempat" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Acara</label>
-                                        <input type="text" name="acara" class="form-control" required>
-                                    </div>
-                                    {{-- <div class="form-group">
-                                    <label class="control-label mb-1">Pembuka</label>
-                                    <textarea name="pembuka" id="pembuka" class="form-control" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Isi</label>
-                                    <textarea name="isi" id="isi" class="form-control" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Penutup</label>
-                                    <textarea name="penutup" id="penutup" class="form-control" required></textarea>
-                                </div> --}}
                                     <div class="form-group">
                                         <label for="">Tembusan</label>
                                         <select data-placeholder="Pilih Tembusan" multiple

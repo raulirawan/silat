@@ -51,108 +51,167 @@
                             <form action="{{ route('admin.surat-undangan.update', $surat->id) }}" method="post">
                                 @csrf
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Jenis Yth</label>
+                                    {{-- <label class="control-label mb-1">Jenis Yth</label>
                                     <select name="pilih_yth" id="pilih_yth" class="form-control" required>
                                         <option value="">Jenis Yth</option>
-                                        <option value="terlampir" {{ $surat->pilih_yth == 'terlampir' ? 'selected' : '' }}>
-                                            Terlampir</option>
-                                        <option value="tidak terlampir"
-                                            {{ $surat->pilih_yth == 'tidak terlampir' ? 'selected' : '' }}>Tidak Terlampir
-                                        </option>
+                                        <option value="terlampir">Terlampir</option>
+                                        <option value="tidak terlampir">Tidak Terlampir</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label mb-1">Yth</label>
-                                    <textarea name="yth" id="yth" class="form-control" required>{{ $surat->yth }}</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Biro</label>
-                                    <select name="biro_id" id="biro_id" class="form-control" required>
-                                        <option value="">Pilih Biro</option>
-                                        @foreach (App\Biro::all() as $biro)
-                                            <option value="{{ $biro->id }}"
-                                                {{ $biro->id == $surat->biro_id ? 'selected' : '' }}>{{ $biro->nama }}
+                                    <textarea name="yth" id="yth" class="form-control" required></textarea>
+                                </div> --}}
+                                    @php
+                                        $surat_yth = json_decode($surat->yth);
+                                    @endphp
+                                    <div class="form-group">
+                                        <label for="">Yth</label>
+                                        <select data-placeholder="Pilih Yth" multiple class="standardSelect form-control"
+                                            name="yth[]">
+                                            @foreach (App\Yth::all() as $key => $yth)
+                                                <option value="{{ $yth->id }}"
+                                                    {{ in_array($yth->id, $surat_yth) ? 'selected' : '' }}>{{ $yth->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">Biro</label>
+                                        <select name="biro_id" id="biro_id" class="form-control" required>
+                                            <option value="">Pilih Biro</option>
+                                            @foreach (App\Biro::all() as $biro)
+                                                <option value="{{ $biro->id }}">{{ $biro->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Tanggal Surat</label>
+                                        <input type="date" name="tanggal" class="form-control"
+                                            value="{{ $surat->tanggal }}" required>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">Nomor Surat</label>
+                                        <input type="text" name="nomor_surat" spellcheck="true" class="form-control">
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Sifat Surat</label>
+                                        <select name="sifat" id="sifat" class="form-control" required>
+                                            <option value="">Pilih Sifat Surat</option>
+                                            <option value="Sangat Rahasia"
+                                                {{ $surat->sifat == 'Sangat Rahasia' ? 'selected' : '' }}>Sangat Rahasia
                                             </option>
-                                        @endforeach
-                                    </select>
+                                            <option value="Rahasia" {{ $surat->sifat == 'Rahasia' ? 'selected' : '' }}>
+                                                Rahasia</option>
+                                            <option value="Penting" {{ $surat->sifat == 'Penting' ? 'selected' : '' }}>
+                                                Penting</option>
+                                            <option value="Konfidensial"
+                                                {{ $surat->sifat == 'Konfidensial' ? 'selected' : '' }}>Konfidensial
+                                            </option>
+                                            <option value="Biasa" {{ $surat->sifat == 'Biasa' ? 'selected' : '' }}>Biasa
+                                            </option>
+                                        </select>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">NIP</label>
+                                        <input type="text" name="nip" class="form-control" required>
+                                    </div> --}}
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">Nama Kepala Bagian</label>
+                                        <input type="text" name="nama_kepala" class="form-control" required>
+                                    </div> --}}
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">Nama Jabatan</label>
+                                        <input type="text" name="nama_jabatan" class="form-control" required>
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Lampiran</label>
+                                        <select name="lampiran" id="lampiran" class="form-control" required>
+                                            <option value="">Pilih Lampiran</option>
+                                            <option value="1 satu (berkas)"
+                                                {{ $surat->lampiran == '1 satu (berkas)' ? 'selected' : '' }}>1 satu
+                                                (berkas)</option>
+                                        </select>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label class="control-label mb-1">Hal</label>
+                                        <input type="text" name="hal" class="form-control" required>
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Hari</label>
+                                        <select name="hari" id="hari" class="form-control" required>
+                                            <option value="">Pilih Hari</option>
+                                            <option value="Senin" {{ $surat->hari == 'Senin' ? 'selected' : '' }}>Senin
+                                            </option>
+                                            <option value="Selasa" {{ $surat->hari == 'Selasa' ? 'selected' : '' }}>Selasa
+                                            </option>
+                                            <option value="Rabu" {{ $surat->hari == 'Rabu' ? 'selected' : '' }}>Rabu
+                                            </option>
+                                            <option value="Kamis" {{ $surat->hari == 'Kamis' ? 'selected' : '' }}>Kamis
+                                            </option>
+                                            <option value="Jum'at" {{ $surat->hari == "Jum'at" ? 'selected' : '' }}>Jum'at
+                                            </option>
+                                            <option value="Sabtu" {{ $surat->hari == 'Sabtu' ? 'selected' : '' }}>Sabtu
+                                            </option>
+                                            <option value="Minggu" {{ $surat->hari == 'Minggu' ? 'selected' : '' }}>Minggu
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Tanggal Acara</label>
+                                        <input type="date" name="tanggal_acara" value="{{ $surat->tanggal_acara }}"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Pukul</label>
+                                        <input type="text" name="pukul" value="{{ $surat->pukul }}"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Tempat</label>
+                                        <input type="text" name="tempat"
+                                            value="{{ $surat->tempat }}"class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Acara</label>
+                                        <input type="text" name="acara"
+                                            value="{{ $surat->acara }}"class="form-control" required>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                    <label class="control-label mb-1">Pembuka</label>
+                                    <textarea name="pembuka" id="pembuka" class="form-control" required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Isi</label>
+                                    <textarea name="isi" id="isi" class="form-control" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Penutup</label>
+                                    <textarea name="penutup" id="penutup" class="form-control" required></textarea>
+                                </div> --}}
+                                    @php
+                                        $surat_tembusan = json_decode($surat->tembusan);
+                                    @endphp
+                                    <div class="form-group">
+                                        <label for="">Tembusan</label>
+                                        <select data-placeholder="Pilih Tembusan" multiple
+                                            class="standardSelect form-control" name="tembusan[]">
+                                            @foreach (App\Tembusan::all() as $key => $tembusan)
+                                                <option value="{{ $tembusan->id }}"
+                                                    {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
+                                                    {{ $tembusan->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Tanggal Surat</label>
-                                    <input type="text" name="tanggal" value="{{ $surat->tanggal }}" class="form-control"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Nomor Surat</label>
-                                    <input type="text" name="nomor_surat" value="{{ $surat->nomor_surat }}"
-                                        class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Sifat Surat</label>
-                                    <input type="text" name="sifat" value="{{ $surat->sifat }}" class="form-control"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">NIP</label>
-                                    <input type="text" name="nip" value="{{ $surat->nip }}" class="form-control"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Nama Kepala Bagian</label>
-                                    <input type="text" name="nama_kepala" value="{{ $surat->nama_kepala }}"
-                                        class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Nama Jabatan</label>
-                                    <input type="text" name="nama_jabatan" value="{{ $surat->nama_jabatan }}"
-                                        class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Judul Lampiran</label>
-                                    <input type="text" name="lampiran" value="{{ $surat->lampiran }}"
-                                        class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Hal</label>
-                                    <input type="text" name="hal" value="{{ $surat->hal }}" class="form-control"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Hari</label>
-                                    <input type="text" name="hari" class="form-control" value="{{ $surat->hari }}"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Tanggal</label>
-                                    <input type="text" name="tanggal_acara" class="form-control"
-                                        value="{{ $surat->tanggal_acara }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Pukul</label>
-                                    <input type="text" name="pukul" class="form-control"
-                                        value="{{ $surat->pukul }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Tempat</label>
-                                    <input type="text" name="tempat" class="form-control"
-                                        value="{{ $surat->tempat }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Acara</label>
-                                    <input type="text" name="acara" class="form-control"
-                                        value="{{ $surat->acara }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Tembusan</label>
-                                    <textarea name="tembusan" id="tembusan" class="form-control">{{ $surat->tembusan }}</textarea>
-                                </div>
-
-                                <div>
-                                    <button id="payment-button" type="submit" class="btn btn-sm btn-info">
-                                        Simpan
-                                    </button>
-                                </div>
+                                    <div>
+                                        <button id="payment-button" type="submit" class="btn btn-sm btn-info">
+                                            Simpan
+                                        </button>
+                                    </div>
                             </form>
                         </div>
                     </div>
@@ -163,11 +222,28 @@
         </div><!-- .animated -->
     </div><!-- .content -->
 
+    @push('down-style')
+        <link rel="stylesheet" href="{{ asset('assets/css/lib/chosen/chosen.min.css') }}">
+    @endpush
 
 
     @push('down-script')
         <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
         <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="{{ asset('assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery(".standardSelect").chosen({
+                    disable_search_threshold: 10,
+                    no_results_text: "Oops, nothing found!",
+                    width: "100%"
+                });
+            });
+        </script>
         <script>
             var pilih_yth = $('#pilih_yth').find(":selected").val();
 

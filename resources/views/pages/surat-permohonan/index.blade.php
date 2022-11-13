@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Halaman Surat Nota Dinas')
+@section('title', 'Halaman Surat Permohonan')
 
 @section('content')
     <div class="breadcrumbs">
@@ -9,7 +9,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Surat Nota Dinas</h1>
+                            <h1>Surat Permohonan</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="#">Dashboard</a></li>
-                                <li><a href="#">Surat Nota Dinas</a></li>
+                                <li><a href="#">Surat Permohonan</a></li>
                             </ol>
                         </div>
                     </div>
@@ -43,9 +43,9 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Tabel Surat Nota Dinas</strong>
-                            {{-- <a href="{{ route('admin.surat-nota-dinas.create') }}"
-                                class="btn btn-info btn-sm mb-3 float-right">Tambah Surat Nota Dinas</a> --}}
+                            <strong class="card-title">Tabel Surat Permohonan</strong>
+                            {{-- <a href="{{ route('admin.surat-permohonan.create') }}"
+                                class="btn btn-info btn-sm mb-3 float-right">Tambah Surat Permohonan</a> --}}
                         </div>
                         <div class="card-body">
 
@@ -54,7 +54,7 @@
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th style="width: 10%">Tanggal Surat</th>
+                                            <th style="width: 15%">Tanggal Surat</th>
                                             <th>Nama Pegawai</th>
                                             <th>Sifat</th>
                                             <th>Status</th>
@@ -65,7 +65,7 @@
                                         @foreach ($surat as $item)
                                             <tr>
                                                 <td>{{ $item->tanggal }}</td>
-                                                <td>{{ $item->user->email }}</td>
+                                                <td>{{ $item->user->email ?? 'Tidak Ada' }}</td>
                                                 <td>{{ $item->sifat }}</td>
                                                 <td>
                                                     @if ($item->status == 'PENDING')
@@ -83,10 +83,9 @@
                                                     <button id="download" data-id="{{ $item->id }}" data-toggle="modal"
                                                         data-target="#modal-download"
                                                         class="btn btn-info btn-sm float-left mr-1">Download</button>
-                                                    <a href="{{ route('nota.dinas.edit', $item->id) }}" id="edit"
+                                                    <a href="{{ route('permohonan.edit', $item->id) }}" id="edit"
                                                         class="btn btn-primary btn-sm float-left mr-1">Edit</a>
-                                                    <form action="{{ route('nota.dinas.delete', $item->id) }}"
-                                                        method="POST">
+                                                    <form action="{{ route('permohonan.delete', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-danger btn-sm"
@@ -186,11 +185,12 @@
                 $('#form-upload').attr('action', '/admin/upload/' + id);
             });
 
+
             $(document).on('click', '#download', function() {
                 var id = $(this).data('id');
 
-                $('#file_lama').attr('href', '/admin/surat-nota-dinas/download/lama/' + id);
-                $('#file_baru').attr('href', '/admin/surat-nota-dinas/download/baru/' + id);
+                $('#file_lama').attr('href', '/admin/surat-permohonan/download/lama/' + id);
+                $('#file_baru').attr('href', '/admin/surat-permohonan/download/baru/' + id);
             });
             $(document).on('click', '#send-email', function() {
                 var id = $(this).data('id');

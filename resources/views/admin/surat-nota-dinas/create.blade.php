@@ -60,66 +60,49 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Dari</label>
-                                    <input type="text" name="dari" class="form-control" required>
+                                    <label class="control-label mb-1">Tanggal Surat</label>
+                                    <input type="date" name="tanggal" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Biro</label>
-                                    <select name="biro_id" id="biro_id" class="form-control" required>
-                                        <option value="">Pilih Biro</option>
-                                        @foreach (App\Biro::all() as $biro)
-                                            <option value="{{ $biro->id }}">{{ $biro->nama }}</option>
-                                        @endforeach
+                                    <label class="control-label mb-1">Sifat Surat</label>
+                                    <select name="sifat" id="sifat" class="form-control" required>
+                                        <option value="">Pilih Sifat Surat</option>
+                                        <option value="Sangat Rahasia">Sangat Rahasia</option>
+                                        <option value="Rahasia">Rahasia</option>
+                                        <option value="Penting">Penting</option>
+                                        <option value="Konfidensial">Konfidensial</option>
+                                        <option value="Biasa">Biasa</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Tanggal Surat</label>
-                                    <input type="text" name="tanggal" class="form-control" required>
+                                    <label class="control-label mb-1">Lampiran</label>
+                                    <select name="lampiran" id="lampiran" class="form-control" required>
+                                        <option value="">Pilih Lampiran</option>
+                                        <option value="1 satu (berkas)">1 satu (berkas)</option>
+                                    </select>
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Nomor Surat</label>
-                                    <input type="text" name="nomor_surat" spellcheck="true" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Sifat Surat</label>
-                                    <input type="text" name="sifat" spellcheck="true" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">NIP</label>
-                                    <input type="text" name="nip" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Nama Kepala Bagian</label>
-                                    <input type="text" name="nama_kepala" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Nama Jabatan</label>
-                                    <input type="text" name="nama_jabatan" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Judul Lampiran</label>
-                                    <input type="text" name="lampiran" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Hal</label>
-                                    <input type="text" name="hal" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Pembuka</label>
+                                    <label class="control-label mb-1">Paragraf 1</label>
                                     <textarea name="pembuka" id="pembuka" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Isi</label>
+                                    <label class="control-label mb-1">Paragraf 2</label>
                                     <textarea name="isi" id="isi" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Penutup</label>
+                                    <label class="control-label mb-1">Paragraf 3</label>
                                     <textarea name="penutup" id="penutup" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Tembusan</label>
-                                    <textarea name="tembusan" id="tembusan" class="form-control" required></textarea>
+                                    <label for="">Tembusan</label>
+                                    <select data-placeholder="Pilih Tembusan" multiple class="standardSelect form-control"
+                                        name="tembusan[]">
+                                        @foreach (App\Tembusan::all() as $tembusan)
+                                            <option value="{{ $tembusan->id }}">{{ $tembusan->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div>
@@ -139,10 +122,51 @@
 
 
 
+    @push('down-style')
+        <link rel="stylesheet" href="{{ asset('assets/css/lib/chosen/chosen.min.css') }}">
+    @endpush
+
     @push('down-script')
         <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
         <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="{{ asset('assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
         <script>
+            jQuery(document).ready(function() {
+                jQuery(".standardSelect").chosen({
+                    disable_search_threshold: 10,
+                    no_results_text: "Oops, nothing found!",
+                    width: "100%"
+                });
+            });
+        </script>
+        <script>
+            $('#pilih_yth').on('change', function() {
+                if (this.value == 'many') {
+                    $("#yth-many").css('display', 'block');
+                    $("#yth-one").css('display', 'none');
+                } else {
+                    $("#yth-many").css('display', 'none');
+                    $("#yth-one").css('display', 'block');
+
+                }
+            });
+        </script>
+        <script>
+            tinymce.init({
+                selector: 'textarea#yth',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
             tinymce.init({
                 selector: 'textarea#pembuka',
                 plugins: 'lists',
