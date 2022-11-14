@@ -131,7 +131,13 @@ class SuratUndanganController extends Controller
         $surat = Surat::find($id);
 
         if ($jenisSurat == 'lama') {
-            $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
+            $countYth = count(json_decode($surat->yth));
+
+            if ($countYth <= 5) {
+                $doc = new TemplateProcessor('surat/surat-undangan-one-yth.docx');
+            } else {
+                $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
+            }
 
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran);
