@@ -37,10 +37,10 @@
                                 class="menu-icon fa fa-envelope"></i>Surat
                             Undangan </a>
                     </li>
-                    <li class="{{ request()->is('admin/surat-permohonan*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.surat-permohonan.index') }}"><i
+                    <li class="{{ request()->is('admin/surat-biasa*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.surat-biasa.index') }}"><i
                                 class="menu-icon fa fa-envelope"></i>Surat
-                            Permohonan </a>
+                            Biasa </a>
                     </li>
                 @else
                     <li class="{{ request()->is('dashboard*') ? 'active' : '' }}">
@@ -55,9 +55,9 @@
                         <a href="{{ route('undangan.index') }}"><i class="menu-icon fa fa-envelope"></i>Surat
                             Undangan</a>
                     </li>
-                    <li class="{{ request()->is('permohonan*') ? 'active' : '' }}">
-                        <a href="{{ route('permohonan.index') }}"><i class="menu-icon fa fa-envelope"></i>Surat
-                            Permohonan</a>
+                    <li class="{{ request()->is('biasa*') ? 'active' : '' }}">
+                        <a href="{{ route('biasa.index') }}"><i class="menu-icon fa fa-envelope"></i>Surat
+                            biasa</a>
                     </li>
                 @endif
 

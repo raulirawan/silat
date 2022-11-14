@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 
-class SuratPermohonanController extends Controller
+class SuratBiasaController extends Controller
 {
     public function index()
     {
         $user_id = User::where('email', Session::get('email'))->first()->id;
-        $surat = Surat::where(['jenis_surat' => 'Permohonan', 'user_id' => $user_id])->get();
-        return view('pages.surat-permohonan.index', compact('surat'));
+        $surat = Surat::where(['jenis_surat' => 'biasa', 'user_id' => $user_id])->get();
+        return view('pages.surat-biasa.index', compact('surat'));
     }
 
     public function create()
     {
-        return view('admin.surat-permohonan.create');
+        return view('admin.surat-biasa.create');
     }
 
     public function store(Request $request)
@@ -43,21 +43,21 @@ class SuratPermohonanController extends Controller
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
         $surat->tembusan = json_encode($request->tembusan);
-        $surat->jenis_surat = 'Permohonan';
+        $surat->jenis_surat = 'biasa';
         $surat->status = 'PENDING';
         $surat->save();
 
         if ($surat != null) {
-            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Tambah');
+            return redirect()->route('biasa.index')->with('success', 'Data Berhasil di Tambah');
         } else {
-            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Tambah');
+            return redirect()->route('biasa.index')->with('error', 'Data Gagal di Tambah');
         }
     }
 
     public function edit($id)
     {
         $surat = Surat::findOrFail($id);
-        return view('admin.surat-permohonan.edit', compact('surat'));
+        return view('admin.surat-biasa.edit', compact('surat'));
     }
 
     public function update(Request $request, $id)
@@ -75,13 +75,13 @@ class SuratPermohonanController extends Controller
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
         $surat->tembusan = json_encode($request->tembusan);
-        $surat->jenis_surat = 'Permohonan';
+        $surat->jenis_surat = 'biasa';
         $surat->save();
 
         if ($surat != null) {
-            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Update');
+            return redirect()->route('biasa.index')->with('success', 'Data Berhasil di Update');
         } else {
-            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Update');
+            return redirect()->route('biasa.index')->with('error', 'Data Gagal di Update');
         }
     }
 
@@ -91,9 +91,9 @@ class SuratPermohonanController extends Controller
 
         if ($data != null) {
             $data->delete();
-            return redirect()->route('permohonan.index')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('biasa.index')->with('success', 'Data Berhasil di Hapus');
         } else {
-            return redirect()->route('permohonan.index')->with('error', 'Data Gagal di Hapus');
+            return redirect()->route('biasa.index')->with('error', 'Data Gagal di Hapus');
         }
     }
 
@@ -103,9 +103,9 @@ class SuratPermohonanController extends Controller
 
         if ($jenisSurat == 'lama') {
             if ($surat->pilih_yth == 'terlampir') {
-                $doc = new TemplateProcessor('surat/surat-permohonan-v1.docx');
+                $doc = new TemplateProcessor('surat/surat-biasa-v1.docx');
             } else {
-                $doc = new TemplateProcessor('surat/surat-permohonan-one-yth.docx');
+                $doc = new TemplateProcessor('surat/surat-biasa-one-yth.docx');
             }
             // $doc->setValue('NOMOR', $surat->nomor_surat);
             $doc->setValue('SIFAT', $surat->sifat);
@@ -143,7 +143,7 @@ class SuratPermohonanController extends Controller
                 $doc->setComplexBlock('html#' . ($i + 1), $containers[$i]);
             }
 
-            $pathFile = 'surat/permohonan-' . $surat->id . '.docx';
+            $pathFile = 'surat/biasa-' . $surat->id . '.docx';
             if (file_exists($pathFile)) {
                 unlink($pathFile);
             }
@@ -152,7 +152,7 @@ class SuratPermohonanController extends Controller
             // save final document
             $doc->saveAs($pathFile, true);
 
-            $name = 'permohonan-' . $surat->id . '.docx';
+            $name = 'biasa-' . $surat->id . '.docx';
 
             $file = $pathFile;
 
@@ -172,7 +172,7 @@ class SuratPermohonanController extends Controller
 
             return Response::download($file, $name, $headers);
         } else {
-            return redirect()->route('permohonan.index')->with('error', 'Surat Belum Tersedia');
+            return redirect()->route('biasa.index')->with('error', 'Surat Belum Tersedia');
         }
     }
 }

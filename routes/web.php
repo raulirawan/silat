@@ -43,13 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::post('undangan/update/{id}', 'SuratUndanganController@update')->name('undangan.update');
     Route::delete('undangan/delete/{id}', 'SuratUndanganController@delete')->name('undangan.delete');
 
-    Route::get('permohonan', 'SuratPermohonanController@index')->name('permohonan.index');
-    Route::get('permohonan/create', 'SuratPermohonanController@create')->name('permohonan.create');
-    // Route::get('permohonan/download/{file_lama_atau_baru}/{surat_id}/', 'SuratPermohonanController@download')->name('permohonan.download');
-    Route::post('permohonan', 'SuratPermohonanController@store')->name('permohonan.store');
-    Route::get('permohonan/edit/{id}', 'SuratPermohonanController@edit')->name('permohonan.edit');
-    Route::post('permohonan/update/{id}', 'SuratPermohonanController@update')->name('permohonan.update');
-    Route::delete('permohonan/delete/{id}', 'SuratPermohonanController@delete')->name('permohonan.delete');
+    Route::get('biasa', 'SuratBiasaController@index')->name('biasa.index');
+    Route::get('biasa/create', 'SuratBiasaController@create')->name('biasa.create');
+    // Route::get('biasa/download/{file_lama_atau_baru}/{surat_id}/', 'SuratBiasaController@download')->name('biasa.download');
+    Route::post('biasa', 'SuratBiasaController@store')->name('biasa.store');
+    Route::get('biasa/edit/{id}', 'SuratBiasaController@edit')->name('biasa.edit');
+    Route::post('biasa/update/{id}', 'SuratBiasaController@update')->name('biasa.update');
+    Route::delete('biasa/delete/{id}', 'SuratBiasaController@delete')->name('biasa.delete');
 
     Route::get('tracking/{surat_id}', 'Admin\TrackingController@index')->name('tracking.surat.index');
 
@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('admin/surat-nota-dinas/download/{file_lama_atau_baru}/{surat_id}/', 'Admin\SuratNotaDinasController@download')->name('admin.surat-nota-dinas.download');
     Route::get('admin/surat-undangan/download/{file_lama_atau_baru}/{surat_id}/', 'Admin\SuratUndanganController@download')->name('admin.surat-undangan.download');
-    Route::get('admin/surat-permohonan/download/{file_lama_atau_baru}/{surat_id}/', 'Admin\SuratPermohonanController@download')->name('admin.surat-permohonan.download');
+    Route::get('admin/surat-biasa/download/{file_lama_atau_baru}/{surat_id}/', 'Admin\SuratBiasaController@download')->name('admin.surat-biasa.download');
 
     // store update undangan
     Route::post('admin/surat-undangan', 'Admin\SuratUndanganController@store')->name('admin.surat-undangan.store');
@@ -69,8 +69,8 @@ Route::middleware('auth')->group(function () {
     Route::post('surat-nota-dinas/update/{id}', 'Admin\SuratNotaDinasController@update')->name('admin.surat-nota-dinas.update');
 
     // store update permohnan
-    Route::post('surat-permohonan', 'Admin\SuratPermohonanController@store')->name('admin.surat-permohonan.store');
-    Route::post('surat-permohonan/update/{id}', 'Admin\SuratPermohonanController@update')->name('admin.surat-permohonan.update');
+    Route::post('surat-biasa', 'Admin\SuratBiasaController@store')->name('admin.surat-biasa.store');
+    Route::post('surat-biasa/update/{id}', 'Admin\SuratBiasaController@update')->name('admin.surat-biasa.update');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
@@ -119,12 +119,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Route::post('surat-undangan/update/{id}', 'Admin\SuratUndanganController@update')->name('admin.surat-undangan.update');
     Route::delete('surat-undangan/delete/{id}', 'Admin\SuratUndanganController@delete')->name('admin.surat-undangan.delete');
 
-    Route::get('surat-permohonan', 'Admin\SuratPermohonanController@index')->name('admin.surat-permohonan.index');
-    Route::get('surat-permohonan/create', 'Admin\SuratPermohonanController@create')->name('admin.surat-permohonan.create');
-    Route::get('surat-permohonan/edit/{surat_id}', 'Admin\SuratPermohonanController@edit')->name('admin.surat-permohonan.edit');
+    Route::get('surat-biasa', 'Admin\SuratBiasaController@index')->name('admin.surat-biasa.index');
+    Route::get('surat-biasa/create', 'Admin\SuratBiasaController@create')->name('admin.surat-biasa.create');
+    Route::get('surat-biasa/edit/{surat_id}', 'Admin\SuratBiasaController@edit')->name('admin.surat-biasa.edit');
     // Route::post('surat-undangan', 'Admin\SuratUndanganController@store')->name('admin.surat-undangan.store');
     // Route::post('surat-undangan/update/{id}', 'Admin\SuratUndanganController@update')->name('admin.surat-undangan.update');
-    Route::delete('surat-permohonan/delete/{id}', 'Admin\SuratPermohonanController@delete')->name('admin.surat-permohonan.delete');
+    Route::delete('surat-biasa/delete/{id}', 'Admin\SuratBiasaController@delete')->name('admin.surat-biasa.delete');
 
     Route::post('upload/{surat_id}', 'Admin\SuratController@upload')->name('upload.surat');
 
