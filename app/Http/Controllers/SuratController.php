@@ -14,10 +14,10 @@ class SuratController extends Controller
         $surat = Surat::find($surat_id);
 
         if ($jenisSurat == 'lama') {
-            $file = $surat->file_dokumen_old;
+            $file = asset($surat->file_dokumen_old);
         } else {
-            if (file_exists($surat->file_dokumen_new)) {
-                $file = $surat->file_dokumen_new;
+            if (file_exists(asset($surat->file_dokumen_new))) {
+                $file = asset($surat->file_dokumen_new);
             } else {
                 return redirect()->back()->with('error', 'Surat Belum Tersedia');
             }
@@ -28,7 +28,7 @@ class SuratController extends Controller
         Mail::send('email.surat', ['data' => $data], function ($message) use ($data, $surat, $file) {
             $message->to($data['email'], $data['email'])
                 ->subject('Surat Anda')
-                ->attachData($file, $surat->jenis_surat . '.docx');
+                ->attach($file);
         });
 
         return redirect()->back()->with('success', 'Berhasil Kirim Email');
