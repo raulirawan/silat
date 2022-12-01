@@ -151,11 +151,11 @@
                                     @endphp
                                     <div class="form-group">
                                         <label for="">Tembusan</label>
-                                        <select data-placeholder="Pilih Tembusan" multiple
+                                         <select data-placeholder="Pilih Tembusan" multiple
                                             class="standardSelect form-control" name="tembusan[]">
                                             @foreach (App\Tembusan::all() as $key => $tembusan)
                                                 <option value="{{ $tembusan->id }}"
-                                                    {{ $tembusan->id == $surat_tembusan[$key] ? 'selected' : '' }}>
+                                                    {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
                                                     {{ $tembusan->nama }}
                                                 </option>
                                             @endforeach
