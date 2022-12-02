@@ -127,7 +127,7 @@ class SuratNotaDinasController extends Controller
             $doc = new TemplateProcessor('surat/nota-dinas-v1.docx');
             $doc->setValue('YTH', $surat->ythh->nama);
             $doc->setValue('SIFAT', $surat->sifat);
-            $doc->setValue('LAMPIRAN', $surat->lampiran);
+            $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
             $doc->setValue('PEMBUKA', strip_tags($surat->pembuka));
             $doc->setValue('PENUTUP', strip_tags($surat->penutup));
             $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
@@ -153,7 +153,11 @@ class SuratNotaDinasController extends Controller
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
-            $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
+            if(count(json_decode($tembusan)) >= 2) {
+                $htmlTembusan = view('admin.tembusan-template-list', compact('tembusan'))->render();
+            }else {
+                $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
+            }
 
             $section = (new PhpWord())->addSection();
             // add html

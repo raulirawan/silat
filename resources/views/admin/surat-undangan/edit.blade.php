@@ -130,8 +130,16 @@
                                         <label class="control-label mb-1">Lampiran</label>
                                         <select name="lampiran" id="lampiran" class="form-control" required>
                                             <option value="">Pilih Lampiran</option>
+                                            <option value="Tidak Ada"
+                                            {{ $surat->lampiran == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
                                             <option value="1 satu (berkas)"
                                                 {{ $surat->lampiran == '1 satu (berkas)' ? 'selected' : '' }}>1 satu
+                                                (berkas)</option>
+                                            <option value="2 satu (berkas)"
+                                                {{ $surat->lampiran == '2 satu (berkas)' ? 'selected' : '' }}>2 satu
+                                                (berkas)</option>
+                                            <option value="3 satu (berkas)"
+                                                {{ $surat->lampiran == '3 satu (berkas)' ? 'selected' : '' }}>3 satu
                                                 (berkas)</option>
                                         </select>
                                     </div>
@@ -169,10 +177,38 @@
                                         <input type="text" name="pukul" value="{{ $surat->pukul }}"
                                             class="form-control" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Tempat</label>
-                                        <input type="text" name="tempat"
-                                            value="{{ $surat->tempat }}"class="form-control" required>
+                                   @if (in_array($surat->tempat,['Ruang Rapat I Biro Pemerintahan','Ruang Rapat II Biro Pemerintahan','Ruang Rapat III Biro Pemerintahan']))
+                                   <div class="form-group">
+                                    <label class="control-label mb-1">Tempat</label>
+                                    <select id="tempat" class="form-control" required>
+                                        <option value="">Pilih Tempat</option>
+                                        <option value="Ruang Rapat I Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat I Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat I Biro Pemerintahan</option>
+                                        <option value="Ruang Rapat II Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat II Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat II Biro Pemerintahan</option>
+                                        <option value="Ruang Rapat III Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat III Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat III Biro Pemerintahan</option>
+                                        <option value="Input Manual">Input Manual</option>
+                                    </select>
+                                </div>
+                                @else
+                                <div class="form-group">
+                                    <label class="control-label mb-1">Tempat</label>
+                                    <select id="tempat" class="form-control" required>
+                                        <option value="">Pilih Tempat</option>
+                                        <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro Pemerintahan</option>
+                                        <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro Pemerintahan</option>
+                                        <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro Pemerintahan</option>
+                                        <option value="Input Manual" selected>Input Manual</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="tempat-manual">
+                                    <label class="control-label mb-1">Input Manual Tempat</label>
+                                    <input type="text" name="tempat"
+                                        value="{{ $surat->tempat }}"class="form-control">
+                                </div>
+                                   @endif
+                                    <div class="form-group" style="display: none" id="tempat-manual">
+                                        <label class="control-label mb-1">Input Manual Tempat</label>
+                                        <input type="text" id="value-tempat" name="tempat"
+                                            value="{{ $surat->tempat }}"class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Acara</label>
@@ -263,6 +299,15 @@
                     $("#yth-many").css('display', 'none');
                     $("#yth-one").css('display', 'block');
 
+                }
+            });
+
+            $('#tempat').on('change', function() {
+                $("#value-tempat").val(this.value);
+                if (this.value == 'Input Manual') {
+                    $("#tempat-manual").css('display', 'block');
+                }else {
+                    $("#tempat-manual").css('display', 'none');
                 }
             });
         </script>

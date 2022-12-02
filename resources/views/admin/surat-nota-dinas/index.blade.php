@@ -85,10 +85,10 @@
                                                     <button id="download" data-id="{{ $item->id }}" data-toggle="modal"
                                                         data-target="#modal-download"
                                                         class="btn btn-info btn-sm float-left mr-1">Download</button>
-                                                    <a href="{{ route('admin.surat-undangan.edit', $item->id) }}"
+                                                    <a href="{{ route('admin.surat-nota-dinas.edit', $item->id) }}"
                                                         id="edit"
                                                         class="btn btn-primary btn-sm float-left mr-1">Edit</a>
-                                                    <form action="{{ route('admin.surat-undangan.delete', $item->id) }}"
+                                                    <form action="{{ route('admin.surat-nota-dinas.delete', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')

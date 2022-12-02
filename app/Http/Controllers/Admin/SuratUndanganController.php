@@ -140,7 +140,7 @@ class SuratUndanganController extends Controller
             }
 
             $doc->setValue('SIFAT', $surat->sifat);
-            $doc->setValue('LAMPIRAN', $surat->lampiran);
+            $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
             $doc->setValue('HARI', $surat->hari);
             $doc->setValue('TANGGALACARA', Helper::dateFormat($surat->tanggal_acara));
             $doc->setValue('PUKUL', $surat->pukul);

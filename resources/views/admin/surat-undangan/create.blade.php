@@ -117,13 +117,16 @@
                                         <label class="control-label mb-1">Lampiran</label>
                                         <select name="lampiran" id="lampiran" class="form-control" required>
                                             <option value="">Pilih Lampiran</option>
+                                            <option value="Tidak Ada">Tidak Ada</option>
                                             <option value="1 satu (berkas)">1 satu (berkas)</option>
+                                            <option value="2 satu (berkas)">2 satu (berkas)</option>
+                                            <option value="3 satu (berkas)">3 satu (berkas)</option>
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label class="control-label mb-1">Hal</label>
-                                        <input type="text" name="hal" class="form-control" required>
-                                    </div> --}}
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Pencipta Surat</label>
+                                        <input type="date" name="tanggal_acara" class="form-control" required>
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Hari</label>
                                         <select name="hari" id="hari" class="form-control" required>
@@ -147,7 +150,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Tempat</label>
-                                        <input type="text" name="tempat" class="form-control" required>
+                                        <select id="tempat" class="form-control" required>
+                                            <option value="">Pilih Tempat</option>
+                                            <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro Pemerintahan</option>
+                                            <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro Pemerintahan</option>
+                                            <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro Pemerintahan</option>
+                                            <option value="Input Manual">Input Manual</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="display: none" id="tempat-manual">
+                                        <label class="control-label mb-1">Input Manual Tempat</label>
+                                        <input type="text" id="value-tempat" name="tempat"
+                                            value=""class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Acara</label>
@@ -220,6 +234,16 @@
                     $("#yth-many").css('display', 'none');
                     $("#yth-one").css('display', 'block');
 
+                }
+            });
+
+            $('#tempat').on('change', function() {
+                $("#value-tempat").val(this.value);
+                if (this.value == 'Input Manual') {
+                    $("#tempat-manual").css('display', 'block');
+                    $("#value-tempat").val('');
+                }else {
+                    $("#tempat-manual").css('display', 'none');
                 }
             });
         </script>

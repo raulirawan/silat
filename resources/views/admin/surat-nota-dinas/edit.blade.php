@@ -63,7 +63,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Tanggal Surat</label>
-                                    <input type="date" name="tanggal" value="{{ $surat->tanggal }}" class="form-control" required>
+                                    <input type="date" name="tanggal" value="{{ $surat->tanggal }}" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label mb-1">Sifat Surat</label>
@@ -87,14 +88,22 @@
                                     <label class="control-label mb-1">Lampiran</label>
                                     <select name="lampiran" id="lampiran" class="form-control" required>
                                         <option value="">Pilih Lampiran</option>
+                                        <option value="Tidak Ada"
+                                        {{ $surat->lampiran == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
                                         <option value="1 satu (berkas)"
                                             {{ $surat->lampiran == '1 satu (berkas)' ? 'selected' : '' }}>1 satu
+                                            (berkas)</option>
+                                        <option value="2 satu (berkas)"
+                                            {{ $surat->lampiran == '2 satu (berkas)' ? 'selected' : '' }}>2 satu
+                                            (berkas)</option>
+                                        <option value="3 satu (berkas)"
+                                            {{ $surat->lampiran == '3 satu (berkas)' ? 'selected' : '' }}>3 satu
                                             (berkas)</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label mb-1">Paragraf 1</label>
+                                    <label class="control-label mb-3">Paragraf 1</label>
                                     <textarea name="pembuka" id="pembuka" class="form-control" required>{{ $surat->pembuka }}</textarea>
                                 </div>
                                 <div class="form-group">
@@ -110,14 +119,14 @@
                                 @endphp
                                 <div class="form-group">
                                     <label for="">Tembusan</label>
-                                    <select data-placeholder="Pilih Tembusan" multiple
-                                            class="standardSelect form-control" name="tembusan[]">
-                                            @foreach (App\Tembusan::all() as $key => $tembusan)
-                                                <option value="{{ $tembusan->id }}"
-                                                    {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
-                                                    {{ $tembusan->nama }}
-                                                </option>
-                                            @endforeach
+                                    <select data-placeholder="Pilih Tembusan" multiple class="standardSelect form-control"
+                                        name="tembusan[]">
+                                        @foreach (App\Tembusan::all() as $key => $tembusan)
+                                            <option value="{{ $tembusan->id }}"
+                                                {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
+                                                {{ $tembusan->nama }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -139,96 +148,96 @@
 
 
     @push('down-style')
-    <link rel="stylesheet" href="{{ asset('assets/css/lib/chosen/chosen.min.css') }}">
-@endpush
+        <link rel="stylesheet" href="{{ asset('assets/css/lib/chosen/chosen.min.css') }}">
+    @endpush
 
-@push('down-script')
-    <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
-    <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="{{ asset('assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
-    <script>
-        jQuery(document).ready(function() {
-            jQuery(".standardSelect").chosen({
-                disable_search_threshold: 10,
-                no_results_text: "Oops, nothing found!",
-                width: "100%"
+    @push('down-script')
+        <script src="{{ asset('/') }}assets/js/init/datatables-init.js"></script>
+        <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="{{ asset('assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery(".standardSelect").chosen({
+                    disable_search_threshold: 10,
+                    no_results_text: "Oops, nothing found!",
+                    width: "100%"
+                });
             });
-        });
-    </script>
-    <script>
-        $('#pilih_yth').on('change', function() {
-            if (this.value == 'many') {
-                $("#yth-many").css('display', 'block');
-                $("#yth-one").css('display', 'none');
-            } else {
-                $("#yth-many").css('display', 'none');
-                $("#yth-one").css('display', 'block');
+        </script>
+        <script>
+            $('#pilih_yth').on('change', function() {
+                if (this.value == 'many') {
+                    $("#yth-many").css('display', 'block');
+                    $("#yth-one").css('display', 'none');
+                } else {
+                    $("#yth-many").css('display', 'none');
+                    $("#yth-one").css('display', 'block');
 
-            }
-        });
-    </script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#yth',
-            plugins: 'lists',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-            lists_indent_on_tab: true,
-            setup: function(editor) {
-                editor.on('change', function(e) {
-                    editor.save();
-                });
-            }
-        });
-        tinymce.init({
-            selector: 'textarea#pembuka',
-            plugins: 'lists',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-            lists_indent_on_tab: true,
-            setup: function(editor) {
-                editor.on('change', function(e) {
-                    editor.save();
-                });
-            }
-        });
-        tinymce.init({
-            selector: 'textarea#isi',
-            plugins: 'lists',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-            lists_indent_on_tab: true,
-            setup: function(editor) {
-                editor.on('change', function(e) {
-                    editor.save();
-                });
-            }
-        });
-        tinymce.init({
-            selector: 'textarea#penutup',
-            plugins: 'lists',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-            lists_indent_on_tab: true,
-            setup: function(editor) {
-                editor.on('change', function(e) {
-                    editor.save();
-                });
-            }
-        });
-        tinymce.init({
-            selector: 'textarea#tembusan',
-            plugins: 'lists',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-            lists_indent_on_tab: true,
-            setup: function(editor) {
-                editor.on('change', function(e) {
-                    editor.save();
-                });
-            }
-        });
-    </script>
-    {{-- <script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
+                }
+            });
+        </script>
+        <script>
+            tinymce.init({
+                selector: 'textarea#yth',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
+            tinymce.init({
+                selector: 'textarea#pembuka',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
+            tinymce.init({
+                selector: 'textarea#isi',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
+            tinymce.init({
+                selector: 'textarea#penutup',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
+            tinymce.init({
+                selector: 'textarea#tembusan',
+                plugins: 'lists',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+                lists_indent_on_tab: true,
+                setup: function(editor) {
+                    editor.on('change', function(e) {
+                        editor.save();
+                    });
+                }
+            });
+        </script>
+        {{-- <script src="https://cdn.ckeditor.com/4.20.0/full/ckeditor.js"></script>
     <script>
         CKEDITOR.addCss('.cke_editable p { line-height: 1.5 !important; }');
         CKEDITOR.replace('pembuka', {
@@ -252,5 +261,5 @@
             removeButtons: 'PasteFromWord'
         });
     </script> --}}
-@endpush
+    @endpush
 @endsection

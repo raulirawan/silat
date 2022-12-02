@@ -79,7 +79,10 @@
                                     <label class="control-label mb-1">Lampiran</label>
                                     <select name="lampiran" id="lampiran" class="form-control" required>
                                         <option value="">Pilih Lampiran</option>
+                                        <option value="Tidak Ada">Tidak Ada</option>
                                         <option value="1 satu (berkas)">1 satu (berkas)</option>
+                                        <option value="2 satu (berkas)">2 satu (berkas)</option>
+                                        <option value="3 satu (berkas)">3 satu (berkas)</option>
                                     </select>
                                 </div>
 
