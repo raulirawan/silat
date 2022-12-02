@@ -173,7 +173,11 @@ class SuratUndanganController extends Controller
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
-            $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
+            if(count(json_decode($tembusan)) >= 2) {
+                $htmlTembusan = view('admin.tembusan-template-list', compact('tembusan'))->render();
+            }else {
+                $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
+            }
 
             $section = (new PhpWord())->addSection();
             // add html
