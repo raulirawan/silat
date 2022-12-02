@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Paragraf 2</label>
-                                        <textarea name="isi" id="isi" class="form-control" required></textarea>
+                                        <textarea name="isi" id="isi" class="form-control" required>{{ $surat->isi }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Paragraf 3</label>
