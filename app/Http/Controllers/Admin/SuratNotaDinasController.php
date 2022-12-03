@@ -18,7 +18,7 @@ class SuratNotaDinasController extends Controller
 {
     public function index()
     {
-        $surat = Surat::where('jenis_surat', 'Nota Dinas')->get();
+        $surat = Surat::where('jenis_surat', 'Nota Dinas')->orderBy('created_at','DESC')->get();
         return view('admin.surat-nota-dinas.index', compact('surat'));
     }
 

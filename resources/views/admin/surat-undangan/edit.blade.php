@@ -72,7 +72,8 @@
                                             name="yth[]">
                                             @foreach (App\Yth::all() as $key => $yth)
                                                 <option value="{{ $yth->id }}"
-                                                    {{ in_array($yth->id, $surat_yth) ? 'selected' : '' }}>{{ $yth->nama }}
+                                                    {{ in_array($yth->id, $surat_yth) ? 'selected' : '' }}>
+                                                    {{ $yth->nama }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -131,7 +132,7 @@
                                         <select name="lampiran" id="lampiran" class="form-control" required>
                                             <option value="">Pilih Lampiran</option>
                                             <option value="Tidak Ada"
-                                            {{ $surat->lampiran == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
+                                                {{ $surat->lampiran == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
                                             <option value="1 satu (berkas)"
                                                 {{ $surat->lampiran == '1 satu (berkas)' ? 'selected' : '' }}>1 satu
                                                 (berkas)</option>
@@ -143,11 +144,12 @@
                                                 (berkas)</option>
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label class="control-label mb-1">Hal</label>
-                                        <input type="text" name="hal" class="form-control" required>
-                                    </div> --}}
                                     <div class="form-group">
+                                        <label class="control-label mb-1">Pencipta Surat</label>
+                                        <input type="text" value="{{ $surat->pencipta_surat }}" name="pencipta_surat"
+                                            class="form-control" required>
+                                    </div>
+                                    {{-- <div class="form-group">
                                         <label class="control-label mb-1">Hari</label>
                                         <select name="hari" id="hari" class="form-control" required>
                                             <option value="">Pilih Hari</option>
@@ -176,35 +178,96 @@
                                         <label class="control-label mb-1">Pukul</label>
                                         <input type="text" name="pukul" value="{{ $surat->pukul }}"
                                             class="form-control" required>
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Pilih Jenis Waktu</label>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="jenis_waktu"
+                                                id="jenis_waktu1" value="satu hari"
+                                                {{ $surat->jenis_waktu == 'satu hari' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="jenis_waktu1">
+                                                Satu Hari
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value="lebih dari satu hari" type="radio"
+                                                name="jenis_waktu" id="jenis_waktu2"
+                                                {{ $surat->jenis_waktu == 'lebih dari satu hari' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="jenis_waktu2">
+                                                Lebih Dari 1 Hari
+                                            </label>
+                                        </div>
                                     </div>
-                                   @if (in_array($surat->tempat,['Ruang Rapat I Biro Pemerintahan','Ruang Rapat II Biro Pemerintahan','Ruang Rapat III Biro Pemerintahan']))
-                                   <div class="form-group">
-                                    <label class="control-label mb-1">Tempat</label>
-                                    <select id="tempat" class="form-control" required>
-                                        <option value="">Pilih Tempat</option>
-                                        <option value="Ruang Rapat I Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat I Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat I Biro Pemerintahan</option>
-                                        <option value="Ruang Rapat II Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat II Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat II Biro Pemerintahan</option>
-                                        <option value="Ruang Rapat III Biro Pemerintahan" {{ $surat->tempat == 'Ruang Rapat III Biro Pemerintahan' ? 'selected' : '' }}>Ruang Rapat III Biro Pemerintahan</option>
-                                        <option value="Input Manual">Input Manual</option>
-                                    </select>
-                                </div>
-                                @else
-                                <div class="form-group">
-                                    <label class="control-label mb-1">Tempat</label>
-                                    <select id="tempat" class="form-control" required>
-                                        <option value="">Pilih Tempat</option>
-                                        <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro Pemerintahan</option>
-                                        <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro Pemerintahan</option>
-                                        <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro Pemerintahan</option>
-                                        <option value="Input Manual" selected>Input Manual</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="tempat-manual">
-                                    <label class="control-label mb-1">Input Manual Tempat</label>
-                                    <input type="text" name="tempat"
-                                        value="{{ $surat->tempat }}"class="form-control">
-                                </div>
-                                   @endif
+
+
+                                    <span id="lebihdarisatuhari" style="display: none">
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tanggal Acara</label>
+                                            <input type="text" value="{{ $surat->tanggal_acara }}" name="tanggal_acara"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Hari</label>
+                                            <input type="text" value="{{ $surat->hari }}" name="hari"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Pukul</label>
+                                            <input type="text" value="{{ $surat->pukul }}" name="pukul"
+                                                class="form-control" required>
+                                        </div>
+                                    </span>
+
+                                    <span id="satuhari" style="display: none">
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tanggal Acara</label>
+                                            <input type="datetime-local"
+                                                value="{{ date('Y-m-d H:i:s', strtotime($surat->tanggal_acara)) }}"
+                                                name="tanggal_acara_satu" class="form-control" required>
+                                        </div>
+                                    </span>
+                                    @if (in_array($surat->tempat, [
+                                        'Ruang Rapat I Biro Pemerintahan',
+                                        'Ruang Rapat II Biro Pemerintahan',
+                                        'Ruang Rapat III Biro Pemerintahan',
+                                    ]))
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tempat</label>
+                                            <select id="tempat" class="form-control" required>
+                                                <option value="">Pilih Tempat</option>
+                                                <option value="Ruang Rapat I Biro Pemerintahan"
+                                                    {{ $surat->tempat == 'Ruang Rapat I Biro Pemerintahan' ? 'selected' : '' }}>
+                                                    Ruang Rapat I Biro Pemerintahan</option>
+                                                <option value="Ruang Rapat II Biro Pemerintahan"
+                                                    {{ $surat->tempat == 'Ruang Rapat II Biro Pemerintahan' ? 'selected' : '' }}>
+                                                    Ruang Rapat II Biro Pemerintahan</option>
+                                                <option value="Ruang Rapat III Biro Pemerintahan"
+                                                    {{ $surat->tempat == 'Ruang Rapat III Biro Pemerintahan' ? 'selected' : '' }}>
+                                                    Ruang Rapat III Biro Pemerintahan</option>
+                                                <option value="Input Manual">Input Manual</option>
+                                            </select>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tempat</label>
+                                            <select id="tempat" class="form-control" required>
+                                                <option value="">Pilih Tempat</option>
+                                                <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro
+                                                    Pemerintahan</option>
+                                                <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro
+                                                    Pemerintahan</option>
+                                                <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro
+                                                    Pemerintahan</option>
+                                                <option value="Input Manual" selected>Input Manual</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" id="tempat-manual">
+                                            <label class="control-label mb-1">Input Manual Tempat</label>
+                                            <input type="text" name="tempat"
+                                                value="{{ $surat->tempat }}"class="form-control">
+                                        </div>
+                                    @endif
                                     <div class="form-group" style="display: none" id="tempat-manual">
                                         <label class="control-label mb-1">Input Manual Tempat</label>
                                         <input type="text" id="value-tempat" name="tempat"
@@ -233,8 +296,8 @@
                                     <div class="form-group">
                                         <label for="">Tembusan</label>
                                         <select data-placeholder="Pilih Tembusan" multiple
-                                            class="standardSelect form-control" name="tembusan[]">
-                                            @foreach (App\Tembusan::all() as $key => $tembusan)
+                                            class="standardSelect form-control" name="tembusan[]" required>
+                                            @foreach (App\Yth::all() as $key => $tembusan)
                                                 <option value="{{ $tembusan->id }}"
                                                     {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
                                                     {{ $tembusan->nama }}
@@ -278,6 +341,33 @@
                     no_results_text: "Oops, nothing found!",
                     width: "100%"
                 });
+
+                var selectedRadio = $('input[name="jenis_waktu"]:checked').val();
+
+                if (selectedRadio == 'satu hari') {
+                        $("#satuhari").css('display', 'block');
+                        $("#lebihdarisatuhari").css('display', 'none');
+
+
+                    } else {
+                        $("#lebihdarisatuhari").css('display', 'block');
+                        $("#satuhari").css('display', 'none');
+
+                    }
+
+                $('input[type=radio][name=jenis_waktu]').change(function() {
+                    if (this.value == 'satu hari') {
+                        $("#satuhari").css('display', 'block');
+                        $("#lebihdarisatuhari").css('display', 'none');
+
+
+                    } else {
+                        $("#lebihdarisatuhari").css('display', 'block');
+                        $("#satuhari").css('display', 'none');
+
+                    }
+                });
+
             });
         </script>
         <script>
@@ -306,7 +396,7 @@
                 $("#value-tempat").val(this.value);
                 if (this.value == 'Input Manual') {
                     $("#tempat-manual").css('display', 'block');
-                }else {
+                } else {
                     $("#tempat-manual").css('display', 'none');
                 }
             });

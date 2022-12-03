@@ -120,8 +120,8 @@
                                 <div class="form-group">
                                     <label for="">Tembusan</label>
                                     <select data-placeholder="Pilih Tembusan" multiple class="standardSelect form-control"
-                                        name="tembusan[]">
-                                        @foreach (App\Tembusan::all() as $key => $tembusan)
+                                        name="tembusan[]" required>
+                                        @foreach (App\Yth::all() as $key => $tembusan)
                                             <option value="{{ $tembusan->id }}"
                                                 {{ in_array($tembusan->id, $surat_tembusan) ? 'selected' : '' }}>
                                                 {{ $tembusan->nama }}

@@ -125,9 +125,27 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Pencipta Surat</label>
-                                        <input type="date" name="tanggal_acara" class="form-control" required>
+                                        <input type="text" name="pencipta_surat" class="form-control" required>
                                     </div>
                                     <div class="form-group">
+                                        <label class="control-label mb-1">Pilih Jenis Waktu</label>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="jenis_waktu"
+                                                id="jenis_waktu1" value="satu hari" checked>
+                                            <label class="form-check-label" for="jenis_waktu1">
+                                                Satu Hari
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value="lebih dari satu hari" type="radio"
+                                                name="jenis_waktu" id="jenis_waktu2">
+                                            <label class="form-check-label" for="jenis_waktu2">
+                                                Lebih Dari 1 Hari
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="form-group">
                                         <label class="control-label mb-1">Hari</label>
                                         <select name="hari" id="hari" class="form-control" required>
                                             <option value="">Pilih Hari</option>
@@ -139,22 +157,42 @@
                                             <option value="Sabtu">Sabtu</option>
                                             <option value="Minggu">Minggu</option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Tanggal Acara</label>
-                                        <input type="date" name="tanggal_acara" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label mb-1">Pukul</label>
-                                        <input type="text" name="pukul" class="form-control" required>
-                                    </div>
+                                    </div> --}}
+                                    <span id="satuhari">
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tanggal Acara</label>
+                                            <input type="datetime-local" name="tanggal_acara_satu"
+                                                id="tanggal_acara_satu"class="form-control" required>
+                                        </div>
+                                    </span>
+
+                                    <span id="lebihdarisatuhari" style="display: none">
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Tanggal Acara</label>
+                                            <input type="text" name="tanggal_acara" class="form-control"
+                                                id="tanggal_acara" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Hari</label>
+                                            <input type="text" name="hari" id="hari" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-1">Pukul</label>
+                                            <input type="text" name="pukul" id="pukul" class="form-control"
+                                                required>
+                                        </div>
+                                    </span>
                                     <div class="form-group">
                                         <label class="control-label mb-1">Tempat</label>
                                         <select id="tempat" class="form-control" required>
                                             <option value="">Pilih Tempat</option>
-                                            <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro Pemerintahan</option>
-                                            <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro Pemerintahan</option>
-                                            <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro Pemerintahan</option>
+                                            <option value="Ruang Rapat I Biro Pemerintahan">Ruang Rapat I Biro Pemerintahan
+                                            </option>
+                                            <option value="Ruang Rapat II Biro Pemerintahan">Ruang Rapat II Biro
+                                                Pemerintahan</option>
+                                            <option value="Ruang Rapat III Biro Pemerintahan">Ruang Rapat III Biro
+                                                Pemerintahan</option>
                                             <option value="Input Manual">Input Manual</option>
                                         </select>
                                     </div>
@@ -167,6 +205,7 @@
                                         <label class="control-label mb-1">Acara</label>
                                         <input type="text" name="acara" class="form-control" required>
                                     </div>
+
                                     {{-- <div class="form-group">
                                     <label class="control-label mb-1">Pembuka</label>
                                     <textarea name="pembuka" id="pembuka" class="form-control" required></textarea>
@@ -182,8 +221,8 @@
                                     <div class="form-group">
                                         <label for="">Tembusan</label>
                                         <select data-placeholder="Pilih Tembusan" multiple
-                                            class="standardSelect form-control" name="tembusan[]">
-                                            @foreach (App\Tembusan::all() as $tembusan)
+                                            class="standardSelect form-control" name="tembusan[]" required>
+                                            @foreach (App\Yth::all() as $tembusan)
                                                 <option value="{{ $tembusan->id }}">{{ $tembusan->nama }}</option>
                                             @endforeach
                                         </select>
@@ -216,6 +255,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
         <script src="{{ asset('assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+        </script>
         <script>
             jQuery(document).ready(function() {
                 jQuery(".standardSelect").chosen({
@@ -223,6 +264,34 @@
                     no_results_text: "Oops, nothing found!",
                     width: "100%"
                 });
+                var selectedRadio = $('input[name="jenis_waktu"]:checked').val();
+                if (selectedRadio == 'satu hari') {
+                    $("#tanggal_acara").removeAttr('required');
+                    $("#hari").removeAttr('required');
+                    $("#pukul").removeAttr('required');
+
+                } else {
+                    $("#tanggal_acara_satu").removeAttr('required');
+                }
+
+                $('input[type=radio][name=jenis_waktu]').change(function() {
+                    if (this.value == 'satu hari') {
+                        $("#satuhari").css('display', 'block');
+                        $("#tanggal_acara").removeAttr('required');
+                        $("#hari").removeAttr('required');
+                        $("#pukul").removeAttr('required');
+                        $("#lebihdarisatuhari").css('display', 'none');
+
+
+                    } else {
+                        $("#lebihdarisatuhari").css('display', 'block');
+                        $("#tanggal_acara_satu").removeAttr('required');
+                        $("#satuhari").css('display', 'none');
+
+                    }
+                });
+
+
             });
         </script>
         <script>
@@ -242,7 +311,7 @@
                 if (this.value == 'Input Manual') {
                     $("#tempat-manual").css('display', 'block');
                     $("#value-tempat").val('');
-                }else {
+                } else {
                     $("#tempat-manual").css('display', 'none');
                 }
             });

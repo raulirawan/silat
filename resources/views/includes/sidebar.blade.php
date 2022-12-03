@@ -21,11 +21,11 @@
                         <a href="{{ route('admin.biro.index') }}"><i class="menu-icon fa fa-user"></i>Biro </a>
                     </li>
                     <li class="{{ request()->is('admin/yth*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.yth.index') }}"><i class="menu-icon fa fa-user"></i>Yth </a>
+                        <a href="{{ route('admin.yth.index') }}"><i class="menu-icon fa fa-user"></i>Yth / Tembusan </a>
                     </li>
-                    <li class="{{ request()->is('admin/tembusan*') ? 'active' : '' }}">
+                    {{-- <li class="{{ request()->is('admin/tembusan*') ? 'active' : '' }}">
                         <a href="{{ route('admin.tembusan.index') }}"><i class="menu-icon fa fa-user"></i>Tembusan </a>
-                    </li>
+                    </li> --}}
                     <li class="{{ request()->is('admin/surat-nota-dinas*') ? 'active' : '' }}">
                         <a href="{{ route('admin.surat-nota-dinas.index') }}"><i
                                 class="menu-icon fa fa-envelope"></i>Surat

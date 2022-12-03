@@ -16,6 +16,6 @@ class Helper
 
         $date->settings(['formatFunction' => 'translatedFormat']);
 
-        return $date->format('l, j F Y');
+        return $date->format('j F Y');
     }
 }

@@ -139,8 +139,8 @@
                                     <div class="form-group">
                                         <label for="">Tembusan</label>
                                         <select data-placeholder="Pilih Tembusan" multiple
-                                            class="standardSelect form-control" name="tembusan[]">
-                                            @foreach (App\Tembusan::all() as $tembusan)
+                                            class="standardSelect form-control" name="tembusan[]" required>
+                                            @foreach (App\Yth::all() as $tembusan)
                                                 <option value="{{ $tembusan->id }}">{{ $tembusan->nama }}</option>
                                             @endforeach
                                         </select>

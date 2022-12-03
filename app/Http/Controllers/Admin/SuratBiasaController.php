@@ -20,7 +20,7 @@ class SuratBiasaController extends Controller
 {
     public function index()
     {
-        $surat = Surat::where('jenis_surat', 'biasa')->get();
+        $surat = Surat::where('jenis_surat', 'biasa')->orderBy('created_at','DESC')->get();
         return view('admin.surat-biasa.index', compact('surat'));
     }
 

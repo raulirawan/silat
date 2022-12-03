@@ -1,7 +1,7 @@
-<ol>
+<ol start="1">
     @foreach (json_decode($tembusan) as $item)
         <li style="font-family: arial, helvetica, sans-serif;"><span
-                style="font-family: arial, helvetica, sans-serif;">{{ App\Tembusan::where('id', $item)->first()->nama ?? 'Tidak Ada' }}</span>
+                style="font-family: arial, helvetica, sans-serif;">{{ App\Yth::where('id', $item)->first()->nama ?? 'Tidak Ada' }}</span>
         </li>
     @endforeach
 </ol>

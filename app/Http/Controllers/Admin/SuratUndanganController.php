@@ -20,7 +20,7 @@ class SuratUndanganController extends Controller
 {
     public function index()
     {
-        $surat = Surat::where('jenis_surat', 'Undangan')->get();
+        $surat = Surat::where('jenis_surat', 'Undangan')->orderBy('created_at','DESC')->get();
         return view('admin.surat-undangan.index', compact('surat'));
     }
 
@@ -37,11 +37,17 @@ class SuratUndanganController extends Controller
         $surat->sifat = $request->sifat;
         $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
+        $surat->pencipta_surat = $request->pencipta_surat;
         $surat->hari = $request->hari;
-        $surat->tanggal_acara = $request->tanggal_acara;
+        if ($request->jenis_waktu == 'satu hari') {
+            $surat->tanggal_acara = $request->tanggal_acara_satu;
+        } else {
+            $surat->tanggal_acara = $request->tanggal_acara;
+        }
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
+        $surat->jenis_waktu = $request->jenis_waktu;
         $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
         $surat->status = 'PENDING';
@@ -72,17 +78,21 @@ class SuratUndanganController extends Controller
     public function update(Request $request, $id)
     {
         $surat = Surat::findOrFail($id);
-
         $surat->yth = json_encode($request->yth);
-
         $surat->sifat = $request->sifat;
         $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
+        $surat->pencipta_surat = $request->pencipta_surat;
         $surat->hari = $request->hari;
-        $surat->tanggal_acara = $request->tanggal_acara;
+        if ($request->jenis_waktu == 'satu hari') {
+            $surat->tanggal_acara = $request->tanggal_acara_satu;
+        } else {
+            $surat->tanggal_acara = $request->tanggal_acara;
+        }
         $surat->pukul = $request->pukul;
         $surat->tempat = $request->tempat;
         $surat->acara = $request->acara;
+        $surat->jenis_waktu = $request->jenis_waktu;
         $surat->tembusan = json_encode($request->tembusan);
         $surat->jenis_surat = 'Undangan';
         $surat->save();
@@ -138,14 +148,27 @@ class SuratUndanganController extends Controller
             } else {
                 $doc = new TemplateProcessor('surat/surat-undangan-v1.docx');
             }
-
-            $doc->setValue('SIFAT', $surat->sifat);
-            $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
-            $doc->setValue('HARI', $surat->hari);
-            $doc->setValue('TANGGALACARA', Helper::dateFormat($surat->tanggal_acara));
-            $doc->setValue('PUKUL', $surat->pukul);
-            $doc->setValue('TEMPAT', $surat->tempat);
-            $doc->setValue('ACARA', $surat->acara);
+            if ($surat->jenis_waktu == 'satu hari') {
+                $hari = Carbon::parse($surat->tangal_acara)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('l');
+                $pukul = date('H:i', strtotime($surat->tanggal_acara)) . ' WIB s.d Selesai';
+                $doc->setValue('SIFAT', $surat->sifat);
+                $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
+                $doc->setValue('PENCIPTASURAT', $surat->pencipta_surat);
+                $doc->setValue('HARI', $hari);
+                $doc->setValue('TANGGALACARA', Helper::dateFormat($surat->tanggal_acara));
+                $doc->setValue('PUKUL', $pukul);
+                $doc->setValue('TEMPAT', $surat->tempat);
+                $doc->setValue('ACARA', $surat->acara);
+            } else {
+                $doc->setValue('SIFAT', $surat->sifat);
+                $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
+                $doc->setValue('PENCIPTASURAT', $surat->pencipta_surat);
+                $doc->setValue('HARI', $surat->hari);
+                $doc->setValue('TANGGALACARA', $surat->tanggal_acara);
+                $doc->setValue('PUKUL', $surat->pukul);
+                $doc->setValue('TEMPAT', $surat->tempat);
+                $doc->setValue('ACARA', $surat->acara);
+            }
             // $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
 
@@ -173,9 +196,9 @@ class SuratUndanganController extends Controller
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
-            if(count(json_decode($tembusan)) >= 2) {
+            if (count(json_decode($tembusan)) >= 2) {
                 $htmlTembusan = view('admin.tembusan-template-list', compact('tembusan'))->render();
-            }else {
+            } else {
                 $htmlTembusan = view('admin.tembusan-template', compact('tembusan'))->render();
             }
 
@@ -193,7 +216,6 @@ class SuratUndanganController extends Controller
                 // and the $i+1 as the cloned elements start with #1
                 $doc->setComplexBlock('tembusan#' . ($i + 1), $containers[$i]);
             }
-
 
             $pathFile = 'surat/undangan-' . $surat->id . '.docx';
             if (file_exists($pathFile)) {
