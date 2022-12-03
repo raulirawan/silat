@@ -128,6 +128,10 @@
                                         <input type="text" name="pencipta_surat" class="form-control" required>
                                     </div>
                                     <div class="form-group">
+                                        <label class="control-label mb-1">Judul Lampiran</label>
+                                        <input type="text" name="judul_lampiran" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="control-label mb-1">Pilih Jenis Waktu</label>
 
                                         <div class="form-check">

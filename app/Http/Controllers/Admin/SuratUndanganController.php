@@ -38,6 +38,7 @@ class SuratUndanganController extends Controller
         $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
         $surat->pencipta_surat = $request->pencipta_surat;
+        $surat->judul_lampiran = $request->judul_lampiran;
         $surat->hari = $request->hari;
         if ($request->jenis_waktu == 'satu hari') {
             $surat->tanggal_acara = $request->tanggal_acara_satu;
@@ -83,6 +84,7 @@ class SuratUndanganController extends Controller
         $surat->tanggal = $request->tanggal;
         $surat->lampiran = $request->lampiran;
         $surat->pencipta_surat = $request->pencipta_surat;
+        $surat->judul_lampiran = $request->judul_lampiran;
         $surat->hari = $request->hari;
         if ($request->jenis_waktu == 'satu hari') {
             $surat->tanggal_acara = $request->tanggal_acara_satu;
@@ -154,6 +156,7 @@ class SuratUndanganController extends Controller
                 $doc->setValue('SIFAT', $surat->sifat);
                 $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
                 $doc->setValue('PENCIPTASURAT', $surat->pencipta_surat);
+                $doc->setValue('JUDULLAMPIRAN', $surat->judul_lampiran);
                 $doc->setValue('HARI', $hari);
                 $doc->setValue('TANGGALACARA', Helper::dateFormat($surat->tanggal_acara));
                 $doc->setValue('PUKUL', $pukul);
@@ -163,6 +166,7 @@ class SuratUndanganController extends Controller
                 $doc->setValue('SIFAT', $surat->sifat);
                 $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
                 $doc->setValue('PENCIPTASURAT', $surat->pencipta_surat);
+                $doc->setValue('JUDULLAMPIRAN', $surat->judul_lampiran);
                 $doc->setValue('HARI', $surat->hari);
                 $doc->setValue('TANGGALACARA', $surat->tanggal_acara);
                 $doc->setValue('PUKUL', $surat->pukul);

@@ -149,6 +149,11 @@
                                         <input type="text" value="{{ $surat->pencipta_surat }}" name="pencipta_surat"
                                             class="form-control" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-1">Judul Lampiran</label>
+                                        <input type="text" value="{{ $surat->judul_lampiran }}" name="judul_lampiran"
+                                            class="form-control" required>
+                                    </div>
                                     {{-- <div class="form-group">
                                         <label class="control-label mb-1">Hari</label>
                                         <select name="hari" id="hari" class="form-control" required>
@@ -205,17 +210,17 @@
                                         <div class="form-group">
                                             <label class="control-label mb-1">Tanggal Acara</label>
                                             <input type="text" value="{{ $surat->tanggal_acara }}" name="tanggal_acara"
-                                                class="form-control" required>
+                                                class="form-control" id="tanggal_acara" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-1">Hari</label>
                                             <input type="text" value="{{ $surat->hari }}" name="hari"
-                                                class="form-control" required>
+                                                class="form-control" id="hari" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-1">Pukul</label>
                                             <input type="text" value="{{ $surat->pukul }}" name="pukul"
-                                                class="form-control" required>
+                                                class="form-control" id="pukul" required>
                                         </div>
                                     </span>
 
@@ -224,7 +229,7 @@
                                             <label class="control-label mb-1">Tanggal Acara</label>
                                             <input type="datetime-local"
                                                 value="{{ date('Y-m-d H:i:s', strtotime($surat->tanggal_acara)) }}"
-                                                name="tanggal_acara_satu" class="form-control" required>
+                                                name="tanggal_acara_satu" id="tanggal_acara_satu" class="form-control" required>
                                         </div>
                                     </span>
                                     @if (in_array($surat->tempat, [
@@ -317,8 +322,8 @@
                 </div>
             </div>
 
-            </div>
-        </div><!-- .animated -->
+        </div>
+    </div><!-- .animated -->
     </div><!-- .content -->
 
     @push('down-style')
@@ -343,28 +348,32 @@
                 });
 
                 var selectedRadio = $('input[name="jenis_waktu"]:checked').val();
-
                 if (selectedRadio == 'satu hari') {
-                        $("#satuhari").css('display', 'block');
-                        $("#lebihdarisatuhari").css('display', 'none');
+                    $("#satuhari").css('display', 'block');
+                    $("#lebihdarisatuhari").css('display', 'none');
+                    $("#tanggal_acara").removeAttr('required');
+                    $("#hari").removeAttr('required');
+                    $("#pukul").removeAttr('required');
 
+                } else {
+                    $("#lebihdarisatuhari").css('display', 'block');
+                    $("#satuhari").css('display', 'none');
 
-                    } else {
-                        $("#lebihdarisatuhari").css('display', 'block');
-                        $("#satuhari").css('display', 'none');
-
-                    }
+                }
 
                 $('input[type=radio][name=jenis_waktu]').change(function() {
                     if (this.value == 'satu hari') {
                         $("#satuhari").css('display', 'block');
                         $("#lebihdarisatuhari").css('display', 'none');
+                        $("#tanggal_acara").removeAttr('required');
+                        $("#hari").removeAttr('required');
+                        $("#pukul").removeAttr('required');
 
 
                     } else {
                         $("#lebihdarisatuhari").css('display', 'block');
                         $("#satuhari").css('display', 'none');
-
+                        $("#tanggal_acara_satu").removeAttr('required');
                     }
                 });
 
