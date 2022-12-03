@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/clear-cache', function() {
+    Artisan::call('config:cache');
+    return 'clear';
+});
+
 Route::get('login', 'AuthController@login')->name('login');
 Route::post('login', 'AuthController@postLogin')->name('login.post');
 Route::post('logout', 'AuthController@logout')->name('logout');
