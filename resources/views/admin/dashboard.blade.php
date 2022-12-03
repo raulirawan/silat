@@ -151,9 +151,9 @@
         (function($) {
             "use strict";
             // single bar chart
-            var totalSurat = '{{ App\Surat::count() }}';
-            var pending = '{{ App\Surat::where('status', 'PENDING')->count() }}';
-            var success = '{{ App\Surat::where('status', 'SELESAI')->count() }}';
+            var totalNotaDinas = '{{ App\Surat::where('jenis_surat','Nota Dinas')->count() }}';
+            var totalUndangan = '{{ App\Surat::where('jenis_surat','Undangan')->count() }}';
+            var totalBiasa = '{{ App\Surat::where('jenis_surat','Biasa')->count() }}';
             var ctx = document.getElementById("singelBarChart");
             ctx.height = 150;
             var myChart = new Chart(ctx, {
@@ -162,22 +162,22 @@
                     labels: ["Total Surat"],
                     datasets: [
                         {
-                            label: "Total Surat",
-                            data: [totalSurat],
+                            label: "Total Surat Nota Dinas",
+                            data: [totalNotaDinas],
                             borderColor: "#007BFF",
                             borderWidth: "0",
                             backgroundColor: "#007BFF"
                         },
                         {
-                            label: "Surat Pending",
-                            data: [pending],
+                            label: "Total Surat Undangan",
+                            data: [totalUndangan],
                             borderColor: "#DC3545",
                             borderWidth: "0",
                             backgroundColor: "#DC3545"
                         },
                         {
-                            label: "Surat Selesai",
-                            data: [success],
+                            label: "Total Surat Biasa",
+                            data: [totalBiasa],
                             borderColor: "#28A745",
                             borderWidth: "0",
                             backgroundColor: "#28A745"
