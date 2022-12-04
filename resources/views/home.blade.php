@@ -262,7 +262,7 @@
                             <div class="email">
                                 <i class="bi bi-envelope"></i>
                                 <h4>Email:</h4>
-                                <p>admin@example.com</p>
+                                <p>biropemerintahan@jakarta.go.id</p>
                             </div>
 
                             <div class="phone">
