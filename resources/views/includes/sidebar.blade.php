@@ -28,7 +28,7 @@
                     </li> --}}
                     <li class="{{ request()->is('admin/surat-nota-dinas*') ? 'active' : '' }}">
                         <a href="{{ route('admin.surat-nota-dinas.index') }}"><i
-                                class="menu-icon fa fa-envelope"></i>Surat
+                                class="menu-icon fa fa-envelope"></i>
                             Nota
                             Dinas </a>
                     </li>
@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li class="{{ request()->is('nota-dinas*') ? 'active' : '' }}">
-                        <a href="{{ route('nota.dinas.index') }}"><i class="menu-icon fa fa-envelope"></i>Surat Nota
+                        <a href="{{ route('nota.dinas.index') }}"><i class="menu-icon fa fa-envelope"></i>Nota
                             Dinas</a>
                     </li>
                     <li class="{{ request()->is('undangan*') ? 'active' : '' }}">

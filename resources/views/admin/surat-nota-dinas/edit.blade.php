@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Halaman Surat Nota Dinas')
+@section('title', 'Halaman Nota Dinas')
 
 @section('content')
     <div class="breadcrumbs">
@@ -9,7 +9,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Surat Nota Dinas</h1>
+                            <h1>Nota Dinas</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="#">Dashboard</a></li>
-                                <li><a href="#">Surat Nota Dinas</a></li>
+                                <li><a href="#">Nota Dinas</a></li>
                             </ol>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Form Edit Surat Nota Dinas</strong>
+                            <strong class="card-title">Form Edit Nota Dinas</strong>
 
                         </div>
                         <div class="card-body">

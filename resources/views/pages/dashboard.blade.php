@@ -175,7 +175,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <a href="{{ route('nota.dinas.create') }}" class="btn btn-info btn-sm">Surat Nota Dinas</a>
+                        <a href="{{ route('nota.dinas.create') }}" class="btn btn-info btn-sm">Nota Dinas</a>
                         <a href="{{ route('undangan.create') }}" class="btn btn-success btn-sm">Surat Undangan</a>
                         <a href="{{ route('biasa.create') }}" class="btn btn-success btn-sm">Surat biasa</a>
                     </div>

@@ -162,7 +162,7 @@
                     labels: ["Total Surat"],
                     datasets: [
                         {
-                            label: "Total Surat Nota Dinas",
+                            label: "Total Nota Dinas",
                             data: [totalNotaDinas],
                             borderColor: "#007BFF",
                             borderWidth: "0",
