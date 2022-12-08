@@ -134,25 +134,6 @@ class SuratBiasaController extends Controller
             // $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
 
-            // pembuka
-            $section = (new PhpWord())->addSection();
-            // add html
-            Html::addHtml($section, $surat->pembuka, false, false);
-
-            // get elements in section
-            $containers = $section->getElements();
-
-            // clone the html block in the template
-            $doc->cloneBlock('pembukablock', count($containers), true, true);
-
-            // replace the variables with the elements
-            for ($i = 0; $i < count($containers); $i++) {
-
-                // be aware of using setComplexBlock
-                // and the $i+1 as the cloned elements start with #1
-                $doc->setComplexBlock('pembuka#' . ($i + 1), $containers[$i]);
-            }
-
             // isi
             $section = (new PhpWord())->addSection();
             // add html
@@ -171,26 +152,6 @@ class SuratBiasaController extends Controller
                 // and the $i+1 as the cloned elements start with #1
                 $doc->setComplexBlock('isi#' . ($i + 1), $containers[$i]);
             }
-
-            // penutup
-            $section = (new PhpWord())->addSection();
-            // add html
-            Html::addHtml($section, $surat->penutup, false, false);
-
-            // get elements in section
-            $containers = $section->getElements();
-
-            // clone the html block in the template
-            $doc->cloneBlock('penutupblock', count($containers), true, true);
-
-            // replace the variables with the elements
-            for ($i = 0; $i < count($containers); $i++) {
-
-                // be aware of using setComplexBlock
-                // and the $i+1 as the cloned elements start with #1
-                $doc->setComplexBlock('penutup#' . ($i + 1), $containers[$i]);
-            }
-
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
