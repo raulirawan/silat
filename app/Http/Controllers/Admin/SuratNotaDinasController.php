@@ -129,28 +129,28 @@ class SuratNotaDinasController extends Controller
             $doc->setValue('SIFAT', $surat->sifat);
             $doc->setValue('LAMPIRAN', $surat->lampiran == 'Tidak Ada' ? '-' : $surat->lampiran);
             $doc->setValue('PEMBUKA', strip_tags($surat->pembuka));
+            $doc->setValue('ISI', strip_tags($surat->isi));
             $doc->setValue('PENUTUP', strip_tags($surat->penutup));
             $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
 
-            // isi
-            $section = (new PhpWord())->addSection();
-            // add html
-            Html::addHtml($section, $surat->isi, false, true);
+            // // isi
+            // $section = (new PhpWord())->addSection();
+            // // add html
+            // Html::addHtml($section, $surat->isi, false, false);
 
-            // get elements in section
-            $containers = $section->getElements();
+            // // get elements in section
+            // $containers = $section->getElements();
+            // // clone the html block in the template
+            // $doc->cloneBlock('htmlblock', count($containers), true, true);
 
-            // clone the html block in the template
-            $doc->cloneBlock('htmlblock', count($containers), true, true);
+            // // replace the variables with the elements
+            // for ($i = 0; $i < count($containers); $i++) {
 
-            // replace the variables with the elements
-            for ($i = 0; $i < count($containers); $i++) {
-
-                // be aware of using setComplexBlock
-                // and the $i+1 as the cloned elements start with #1
-                $doc->setComplexBlock('html#' . ($i + 1), $containers[$i]);
-            }
+            //     // be aware of using setComplexBlock
+            //     // and the $i+1 as the cloned elements start with #1
+            //     $doc->setComplexBlock('html#' . ($i + 1), $containers[$i]);
+            // }
 
 
             // TEMBUSAN BLOCK

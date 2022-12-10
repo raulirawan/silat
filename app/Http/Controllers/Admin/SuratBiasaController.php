@@ -134,24 +134,24 @@ class SuratBiasaController extends Controller
             // $doc->setValue('TEMBUSAN', strip_tags($surat->tembusan));
             // create temporary section
 
-            // isi
-            $section = (new PhpWord())->addSection();
-            // add html
-            Html::addHtml($section, $surat->isi, false, false);
+            // // isi
+            // $section = (new PhpWord())->addSection();
+            // // add html
+            // Html::addHtml($section, $surat->isi, false, false);
 
-            // get elements in section
-            $containers = $section->getElements();
+            // // get elements in section
+            // $containers = $section->getElements();
 
-            // clone the html block in the template
-            $doc->cloneBlock('isiblock', count($containers), true, true);
+            // // clone the html block in the template
+            // $doc->cloneBlock('isiblock', count($containers), true, true);
 
-            // replace the variables with the elements
-            for ($i = 0; $i < count($containers); $i++) {
+            // // replace the variables with the elements
+            // for ($i = 0; $i < count($containers); $i++) {
 
-                // be aware of using setComplexBlock
-                // and the $i+1 as the cloned elements start with #1
-                $doc->setComplexBlock('isi#' . ($i + 1), $containers[$i]);
-            }
+            //     // be aware of using setComplexBlock
+            //     // and the $i+1 as the cloned elements start with #1
+            //     $doc->setComplexBlock('isi#' . ($i + 1), $containers[$i]);
+            // }
 
             // TEMBUSAN BLOCK
             $tembusan = $surat->tembusan;
